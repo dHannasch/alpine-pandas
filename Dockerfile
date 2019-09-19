@@ -1,4 +1,4 @@
-FROM dahanna/python.3.7-pandas-alpine
+FROM dahanna/python.3.7-scipy-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -9,8 +9,5 @@ FROM dahanna/python.3.7-pandas-alpine
 RUN apk --update add --no-cache --virtual scipy-runtime
 RUN apk add --no-cache --virtual scipy-build build-base python-dev openblas-dev freetype-dev pkgconfig gfortran
 
-RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+RUN pip install --no-cache-dir seaborn
 
-RUN pip install --no-cache-dir scipy
-
-RUN apk del scipy-runtime scipy-build build-base
