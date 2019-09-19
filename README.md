@@ -1,2 +1,2 @@
-# alpine-pandas
-Python image with pandas based on Alpine platform
+# python.3.7-git-tox-alpine
+Python image with git and tox based on Alpine platform

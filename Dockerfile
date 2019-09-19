@@ -1,7 +1,5 @@
-FROM python:3.7.2-alpine3.9
+FROM python:3.7-alpine
 
-LABEL maintainer="nickgryg@gmail.com"
+RUN apk --update add --no-cache git
 
-RUN apk --update add --no-cache g++
-
-RUN pip install pandas
+RUN pip install tox
