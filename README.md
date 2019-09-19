@@ -1,2 +1,2 @@
-# python.3.7-pandas-alpine
-Python image with pandas based on Alpine platform
+# python.3.7-scipy-alpine
+Python image with scipy based on Alpine platform
