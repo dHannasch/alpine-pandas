@@ -7,7 +7,7 @@ FROM dahanna/python.3.7-pandas-alpine
 # python:3.7-alpine is 32.27MB.
 
 RUN apk --update add --no-cache --virtual scipy-runtime
-RUN apk add --no-cache --virtual scipy-build build-base python-dev openblas-dev freetype-dev pkgconfig gfortran
+RUN apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran
 
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 
