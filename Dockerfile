@@ -6,5 +6,5 @@ FROM dahanna/python:3.7-seaborn-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk add --no-cache openjdk11 fontconfig
+RUN apk add --no-cache openjdk11 fontconfig ttf-dejavu
 
