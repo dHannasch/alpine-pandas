@@ -6,9 +6,12 @@ FROM dahanna/python.3.7-git-tox-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
+# An apk del in an extra layer has no benefit.
+# Removing files makes images larger, not smaller.
+# You must apk add and apk del in the same layer to benefit from it.
+
 RUN apk --update add --no-cache --virtual g++
-
-RUN pip install --no-cache-dir pandas
-# --no-cache-dir reduced image size from 226.67MB to .
-
-# RUN apk del g++
+    && pip install --no-cache-dir pandas
+    # --no-cache-dir reduced image size from 226.67MB to .
+    && apk del --no-cache g++
+    # apk del reduced image size from  to .
