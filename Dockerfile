@@ -18,4 +18,4 @@ RUN apk --update add --no-cache --virtual subversion gfortran g++ openblas-dev \
     && pip install --no-cache-dir pandas \
     && apk del --no-cache subversion gfortran g++
     # Adding --no-cache-dir to pip install reduced image size from 226.67MB to 208MB.
-    # apk del subversion gfortran reduced image size from 208MB to .
+    # apk del subversion gfortran reduced image size from 208MB to 98.89MB.
