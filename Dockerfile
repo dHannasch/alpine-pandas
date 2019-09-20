@@ -6,8 +6,7 @@ FROM dahanna/python:3.7-scipy-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk --update add --no-cache --virtual scipy-runtime
-RUN apk add --no-cache --virtual scipy-build build-base python-dev openblas-dev freetype-dev pkgconfig gfortran
+RUN apk add --no-cache --virtual build-base freetype-dev pkgconfig
 
 RUN pip install --no-cache-dir seaborn
 
