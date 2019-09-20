@@ -1,2 +1,2 @@
-# python.3.7-seaborn-alpine
-Python image with seaborn based on Alpine platform
+# python.3.7-java-alpine
+Python image with Java based on Alpine platform
