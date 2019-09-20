@@ -10,8 +10,12 @@ FROM dahanna/python.3.7-git-tox-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk --update add --no-cache --virtual g++
-    && pip install --no-cache-dir pandas
-    # --no-cache-dir reduced image size from 226.67MB to .
+# subversion to fix /bin/sh: svnversion: not found
+# gfortran to fix Could not locate executable gfortran
+# openblas-dev to fix Blas libraries are not found.
+# openblas-dev might need to stick around
+RUN apk --update add --no-cache --virtual subversion gfortran openblas-dev g++ \
+    && pip install --no-cache-dir pandas \
     && apk del --no-cache g++
+    # Adding --no-cache-dir to pip install reduced image size from 226.67MB to .
     # apk del reduced image size from  to .
