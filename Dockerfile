@@ -6,6 +6,9 @@ FROM dahanna/python.3.7-git-tox-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk --update add --no-cache g++
+RUN apk --update add --no-cache --virtual g++
 
-RUN pip install pandas
+RUN pip install --no-cache-dir pandas
+# --no-cache-dir reduced image size from 226.67MB to .
+
+# RUN apk del g++
