@@ -10,7 +10,8 @@ FROM dahanna/python.3.7-pandas-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk --update add --no-cache --virtual scipy-runtime scipy-build build-base freetype-dev pkgconfig gfortran openblas-dev \
+RUN apk --update add --no-cache --virtual scipy-build
+    && apk add --no-cache scipy-runtime build-base freetype-dev pkgconfig gfortran openblas-dev \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     && pip install --no-cache-dir scipy \
     && apk del --no-cache scipy-runtime scipy-build build-base freetype-dev pkgconfig gfortran
