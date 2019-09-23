@@ -8,7 +8,7 @@ FROM dahanna/python.3.7-pandas-alpine
 
 RUN apk --update add --no-cache --virtual scipy-runtime \
     && apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran
-RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+    && ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
