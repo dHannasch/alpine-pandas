@@ -8,11 +8,10 @@ FROM dahanna/python.3.7-pandas-alpine
 
 RUN apk --update add --no-cache --virtual scipy-runtime \
     && apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran \
-    && ln -s /usr/include/locale.h /usr/include/xlocale.h
+    && ln -s /usr/include/locale.h /usr/include/xlocale.h \
+    && pip install --no-cache-dir scipy
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
-
-RUN pip install --no-cache-dir scipy
 
