@@ -10,7 +10,7 @@ RUN apk --update add --no-cache --virtual scipy-runtime \
     && apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     && pip install --no-cache-dir scipy \
-    && apk del --no-cache freetype-dev
+    && apk del --no-cache freetype-dev pkgconfig gfortran
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
