@@ -10,7 +10,9 @@ RUN apk --update add --no-cache --virtual scipy-runtime \
     && apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     && pip install --no-cache-dir scipy \
-    && apk del --no-cache scipy-build build-base freetype-dev pkgconfig gfortran
+    && apk del --no-cache scipy-build build-base freetype-dev pkgconfig gfortran \
+    && apk del --no-cache scipy-runtime
+    # apk del scipy-build build-base reduced image size from 274MB to 173MB.
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
