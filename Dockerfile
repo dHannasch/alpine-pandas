@@ -12,6 +12,7 @@ RUN apk --update add --no-cache --virtual scipy-runtime \
     && pip install --no-cache-dir scipy \
     && python -c "import scipy" \
     && apk del --no-cache scipy-build build-base freetype-dev pkgconfig gfortran \
+    && python -c "import scipy" \
     && apk del --no-cache scipy-runtime
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
     # apk del scipy-runtime did not decrease image size: it remained 173MB.
