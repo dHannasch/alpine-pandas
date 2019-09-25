@@ -14,6 +14,7 @@ FROM dahanna/python.3.7-git-tox-alpine
 # gfortran to fix Could not locate executable gfortran
 # openblas-dev to fix Blas libraries are not found.
 # openblas-dev might need to stick around
+RUN apk add --no-cache openblas
 RUN apk --update add --no-cache --virtual subversion gfortran g++ openblas-dev \
     && pip install --no-cache-dir pandas \
     && apk del --no-cache subversion gfortran g++ \
