@@ -14,7 +14,9 @@ FROM dahanna/python.3.7-git-tox-alpine
 # gfortran to fix Could not locate executable gfortran
 # openblas-dev to fix Blas libraries are not found.
 # openblas-dev might need to stick around
-RUN apk add --no-cache openblas
+# apk add libstdc++ fixes ImportError: Error loading shared library libstdc++.so.6: No such file or directory
+# apk add openblas fixes ImportError: Error loading shared library libopenblas.so.3: No such file or directory
+RUN apk add --no-cache openblas libstdc++
 RUN apk --update add --no-cache --virtual subversion gfortran g++ openblas-dev \
     && pip install --no-cache-dir pandas \
     && apk del --no-cache subversion gfortran g++ \
