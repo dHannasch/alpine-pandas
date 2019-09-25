@@ -6,7 +6,12 @@ FROM dahanna/python:3.7-scipy-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk add --no-cache --virtual build-base freetype-dev pkgconfig
+# An apk del in an extra layer has no benefit.
+# Removing files makes images larger, not smaller.
+# You must apk add and apk del in the same layer to benefit from it.
 
-RUN pip install --no-cache-dir seaborn
+RUN apk --update add --no-cache --virtual build-base freetype-dev pkgconfig \
+    && pip install --no-cache-dir seaborn \
+    && apk del --no-cache build-base freetype-dev pkgconfig
+    # apk del reduced image size from 365MB to .
 
