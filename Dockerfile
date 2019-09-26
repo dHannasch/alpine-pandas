@@ -10,9 +10,9 @@ FROM dahanna/python:3.7-scipy-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk --update add --no-cache --virtual openblas
 RUN apk --update add --no-cache --virtual build-base freetype-dev pkgconfig \
     && pip install --no-cache-dir seaborn \
+    && python -c "import seaborn" \
     && apk del --no-cache build-base freetype-dev pkgconfig
     # apk del reduced image size from 365MB to .
 
