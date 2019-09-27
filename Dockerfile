@@ -10,6 +10,3 @@ RUN apk add --no-cache openjdk11 fontconfig ttf-dejavu
 # fontconfig and ttf-dejavu are necessary to prevent java.lang.NullPointerException
 # at java.desktop/sun.awt.FontConfiguration.getVersion(FontConfiguration.java:1262)
 
-RUN apk add --no-cache openblas
-RUN apk add --no-cache --virtual openblas-dev
-
