@@ -1,4 +1,4 @@
-FROM dahanna/python:3.7-scipy-alpine
+FROM dahanna/python:3.7-seaborn-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -10,9 +10,9 @@ FROM dahanna/python:3.7-scipy-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk --update add --no-cache --virtual build-base freetype-dev pkgconfig g++ \
-    && pip install --no-cache-dir seaborn \
-    && python -c "import seaborn" \
-    && apk del --no-cache build-base freetype-dev pkgconfig g++
+RUN apk add --no-cache --virtual g++ make libffi-dev libressl-dev \
+    && pip install --no-cache-dir paramiko \
+    && apk del --no-cache g++ make libffi-dev libressl-dev \
+    && python -c "import paramiko"
     # apk del reduced image size from 365MB to .
 
