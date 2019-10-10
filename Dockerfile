@@ -10,7 +10,7 @@ FROM dahanna/python:3.7-seaborn-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk add --no-cache --virtual g++ make libffi-dev libressl-dev \
+RUN apk add --no-cache --virtual gcc make libffi-dev libressl-dev \
     && pip install --no-cache-dir paramiko \
     && apk del --no-cache g++ make libffi-dev libressl-dev \
     && python -c "import paramiko"
