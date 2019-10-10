@@ -13,7 +13,7 @@ FROM dahanna/python:3.7-seaborn-alpine
 RUN apk add --no-cache --virtual .build-deps musl-dev g++ make libffi-dev libressl-dev \
     && pip install --no-cache-dir paramiko \
     && python -c "import paramiko" \
-    && apk del --no-cache .build-deps g++ make \
+    && apk del --no-cache g++ make \
     && python -c "import paramiko"
     # apk del reduced image size from 365MB to .
 
