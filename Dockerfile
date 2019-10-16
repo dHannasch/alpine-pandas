@@ -20,8 +20,8 @@ RUN apk add --no-cache --virtual llvm-dev \
     && ./configure --disable-static \
     && make \
     && make install-strip \
-    && cd ..
-    && CVXOPT_BLAS_LIB=openblas CVXOPT_LAPACK_LIB=openblas CVXOPT_BLAS_LIB_DIR=/usr/include/suitesparse CVXOPT_SUITESPARSE_INC_DIR=/usr/include/suitesparse CVXOPT_BUILD_GLPK=1 pip install --no-cache-dir cvxopt
+    && cd .. \
+    && CVXOPT_BLAS_LIB=openblas CVXOPT_LAPACK_LIB=openblas CVXOPT_BLAS_LIB_DIR=/usr/include/suitesparse CVXOPT_SUITESPARSE_INC_DIR=/usr/include/suitesparse CVXOPT_BUILD_GLPK=1 pip install --no-cache-dir cvxopt \
     && python -c "import cvxopt" \
     && apk del --no-cache llvm-dev \
     && python -c "import cvxopt"
