@@ -13,6 +13,9 @@ FROM dahanna/python:3.7-paramiko-alpine
   # https://github.com/openagua/alpine-glpk-python3
   # https://hub.docker.com/r/frolvlad/alpine-python-machinelearning/dockerfile
 RUN apk add --no-cache --virtual llvm-dev \
+    # openblas-dev is incompatible with lapack-dev?
+    # apk add openblas-dev results in ERROR openblas-dev-0.3.6-r0 trying to overwrite usr/include/cblas.h owned by lapack-dev-3.8.0-r1.
+    # And suitesparse-dev includes openblas, so suitesparse-dev incompatible with lapack-dev?
     && apk add suitesparse-dev --repository=http://nl.alpinelinux.org/alpine/edge/main \
     && wget "ftp://ftp.gnu.org/gnu/glpk/glpk-4.65.tar.gz" \
     && tar xzf "glpk-4.65.tar.gz" \
