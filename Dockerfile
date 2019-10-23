@@ -13,6 +13,14 @@ FROM dahanna/python:3.7-scipy-alpine
 RUN apk --update add --no-cache --virtual build-base freetype-dev pkgconfig g++ \
     && pip install --no-cache-dir seaborn \
     && python -c "import seaborn" \
-    && apk del --no-cache build-base freetype-dev pkgconfig g++
+    && apk del --no-cache build-base freetype-dev pkgconfig g++ \
     # apk del reduced image size from 365MB to .
+    && apk add --no-cache freetype
+    # freetype is needed to import matplotlib. Without it, we get this error:
+#     import matplotlib.pyplot as plt
+#  File "/usr/local/lib/python3.7/site-packages/matplotlib/__init__.py", line 205, in <module>
+#    _check_versions()
+#  File "/usr/local/lib/python3.7/site-packages/matplotlib/__init__.py", line 190, in _check_versions
+#    from . import ft2font
+# ImportError: Error loading shared library libfreetype.so.6: No such file or directory (needed by /usr/local/lib/python3.7/site-packages/matplotlib/ft2font.cpython-37m-x86_64-linux-gnu.so)
 
