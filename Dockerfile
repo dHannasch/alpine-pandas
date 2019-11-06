@@ -1,4 +1,4 @@
-FROM dahanna/python:3.7-paramiko-alpine
+FROM dahanna/python:3.7-cvxopt-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -12,21 +12,11 @@ FROM dahanna/python:3.7-paramiko-alpine
 
   # https://github.com/openagua/alpine-glpk-python3
   # https://hub.docker.com/r/frolvlad/alpine-python-machinelearning/dockerfile
-RUN apk add --no-cache --virtual llvm-dev \
-    # openblas-dev is incompatible with lapack-dev?
-    # apk add openblas-dev results in ERROR openblas-dev-0.3.6-r0 trying to overwrite usr/include/cblas.h owned by lapack-dev-3.8.0-r1.
-    # And suitesparse-dev includes openblas, so suitesparse-dev incompatible with lapack-dev?
-    && apk add suitesparse-dev --repository=http://nl.alpinelinux.org/alpine/edge/main \
-    && wget "ftp://ftp.gnu.org/gnu/glpk/glpk-4.65.tar.gz" \
-    && tar xzf "glpk-4.65.tar.gz" \
-    && cd "glpk-4.65" \
-    && ./configure --disable-static \
-    && make \
-    && make install-strip \
-    && cd .. \
-    && CVXOPT_BLAS_LIB=openblas CVXOPT_LAPACK_LIB=openblas CVXOPT_BLAS_LIB_DIR=/usr/include/suitesparse CVXOPT_SUITESPARSE_INC_DIR=/usr/include/suitesparse CVXOPT_BUILD_GLPK=1 pip install --no-cache-dir cvxopt \
-    && python -c "import cvxopt" \
-    && apk del --no-cache llvm-dev \
-    && python -c "import cvxopt"
+RUN apk add --no-cache --virtual hdf5-dev build-base \
+    && pip install --no-cache-dir hickle \
+    && python -c "import hickle" \
+    && apk del --no-cache hdf5-dev build-base \
+    && apk add --no-cache hdf5 \
+    && python -c "import hickle"
     # apk del reduced image size from 365MB to .
 
