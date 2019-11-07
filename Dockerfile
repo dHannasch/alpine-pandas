@@ -24,7 +24,7 @@ RUN apk add --no-cache --virtual build-base \
     && `gcc -print-prog-name=cc1plus` -v \
     # https://pkgs.alpinelinux.org/contents?repo=testing&page=2&arch=x86&branch=edge&name=hdf5-dev
     && echo "find / -name hdf5.h:" \
-    && find / -name hdf5.h \
+    && find / -name hdf5*.h* \
     && ls /usr/include/hdf5.h \
     && C_INCLUDE_PATH=/usr/include/ pip install --no-cache-dir --no-binary :all: hickle \
     # With or without --no-binary :all:, get Error loading shared library libhdf5.so: No such file or directory
