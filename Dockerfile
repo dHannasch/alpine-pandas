@@ -17,7 +17,9 @@ RUN apk add --no-cache --virtual build-base \
     && apk add --no-cache --virtual hdf5-dev \
     # apk add --no-cache --virtual --repository http://dl-3.alpinelinux.org/alpine/edge/testing hdf5-dev results in ERROR: unsatisfiable constraints
     && echo $LD_LIBRARY_PATH \
-    && LD_LIBRARY_PATH=/lib pip install --no-cache-dir --no-binary :all: hickle \
+    # https://pkgs.alpinelinux.org/contents?file=&path=&name=hdf5&branch=edge&repo=testing&arch=x86
+    && ln -s /usr/lib/libhdf5.so.103 /usr/lib/libhdf5.so \
+    && pip install --no-cache-dir --no-binary :all: hickle \
     # With or without --no-binary :all:, get Error loading shared library libhdf5.so: No such file or directory
     && python -c "import hickle" \
     && apk del --no-cache hdf5-dev build-base \
