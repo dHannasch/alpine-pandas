@@ -13,10 +13,10 @@ FROM dahanna/python:3.7-cvxopt-alpine
   # https://github.com/openagua/alpine-glpk-python3
   # https://hub.docker.com/r/frolvlad/alpine-python-machinelearning/dockerfile
 RUN apk add --no-cache --virtual hdf5-dev build-base \
+    && apk add --no-cache hdf5 \
     && pip install --no-cache-dir hickle \
     && python -c "import hickle" \
     && apk del --no-cache hdf5-dev build-base \
-    && apk add --no-cache hdf5 \
     && python -c "import hickle"
     # apk del reduced image size from 365MB to .
 
