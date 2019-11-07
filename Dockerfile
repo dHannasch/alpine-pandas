@@ -14,7 +14,8 @@ FROM dahanna/python:3.7-cvxopt-alpine
   # https://hub.docker.com/r/frolvlad/alpine-python-machinelearning/dockerfile
 RUN apk add --no-cache --virtual build-base \
     && apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing hdf5 \
-    && apk add --no-cache --virtual --repository http://dl-3.alpinelinux.org/alpine/edge/testing hdf5-dev \
+    && apk add --no-cache --virtual hdf5-dev \
+    # apk add --no-cache --virtual --repository http://dl-3.alpinelinux.org/alpine/edge/testing hdf5-dev results in ERROR: unsatisfiable constraints
     && pip install --no-cache-dir hickle \
     && python -c "import hickle" \
     && apk del --no-cache hdf5-dev build-base \
