@@ -19,5 +19,6 @@ RUN conda create --name test-env sphinx
 # we will definitely need sphinx.
 RUN conda install --name test-env --channel conda-forge tox
 RUN conda init bash
+RUN source /root/.bashrc
 RUN conda activate test-env \
     && python -c "import sys; print(sys.executable)"
