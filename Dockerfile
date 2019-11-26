@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM frolvlad/alpine-miniconda3
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -14,7 +14,6 @@ FROM python:3.7-alpine
 
 RUN apk --update add --no-cache git
 
+RUN conda create --name test-env tox sphinx
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
-RUN pip install --no-cache-dir tox sphinx
-# Adding --no-cache-dir to pip reduced the image size from 49.22MB to 45.54MB.
