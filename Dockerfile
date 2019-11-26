@@ -14,6 +14,7 @@ FROM frolvlad/alpine-miniconda3
 
 RUN apk --update add --no-cache git
 
-RUN conda create --name test-env tox sphinx
+RUN conda create --name test-env sphinx
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
+RUN conda install --name test-env --channel conda-forge tox
