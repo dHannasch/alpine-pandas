@@ -1,4 +1,4 @@
-FROM dahanna/python.3.7-scipy-alpine
+FROM dahanna/python:3.7-scipy-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -12,6 +12,8 @@ RUN apk add --no-cache libzmq \
     && python -c "import pyzmq" \
     && apk del --no-cache build-base musl-dev zeromq-dev \
     && python -c "import pyzmq" \
+# https://stackoverflow.com/questions/51915174/how-to-install-pyzmq-on-a-alpine-linux-container
+# python:3.6-alpine does not install Python via apk, it has Python built from source and located under /usr/local. So when you inherit from python:3.6-alpine, install python3-dev and run pip install pyzmq, you'll end up with building pyzmq for Python 3.6.6 (coming from python:3.6-alpine) using header files from Python 3.6.4 (coming from apk add python3-dev).
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
