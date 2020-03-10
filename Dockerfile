@@ -7,10 +7,10 @@ FROM dahanna/python:3.7-scipy-alpine
 # python:3.7-alpine is 32.27MB.
 
 RUN apk add --no-cache libzmq \
-    && apk add --no-cache --virtual build-base musl-dev zeromq-dev \
+    && apk add --no-cache --virtual build-base g++ musl-dev zeromq-dev \
     && pip install --no-cache-dir pyzmq \
     && python -c "import pyzmq" \
-    && apk del --no-cache build-base musl-dev zeromq-dev \
+    && apk del --no-cache build-base g++ musl-dev zeromq-dev \
     && python -c "import pyzmq" \
 # https://stackoverflow.com/questions/51915174/how-to-install-pyzmq-on-a-alpine-linux-container
 # python:3.6-alpine does not install Python via apk, it has Python built from source and located under /usr/local. So when you inherit from python:3.6-alpine, install python3-dev and run pip install pyzmq, you'll end up with building pyzmq for Python 3.6.6 (coming from python:3.6-alpine) using header files from Python 3.6.4 (coming from apk add python3-dev).
