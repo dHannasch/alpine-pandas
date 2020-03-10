@@ -1,21 +1,64 @@
-FROM dahanna/python:3.7-scipy-alpine
-# Since this image is intended for continuous integration, we want to
-# keep the size down, hence Alpine.
-# Some packages might have tests that take much longer than it could ever
-# take to download even a large Docker image, but we want this image to
-# be applicable to all packages including small packages.
-# python:3.7-alpine is 32.27MB.
+# https://github.com/pandoc/dockerfiles/blob/master/alpine/Dockerfile
 
-RUN apk add --no-cache libzmq \
-    && apk add --no-cache --virtual build-base g++ musl-dev zeromq-dev \
-    && pip install --no-cache-dir pyzmq \
-    && python -c "import zmq" \
-    && apk del --no-cache build-base g++ musl-dev zeromq-dev \
-    && python -c "import zmq" \
-# https://stackoverflow.com/questions/51915174/how-to-install-pyzmq-on-a-alpine-linux-container
-# python:3.6-alpine does not install Python via apk, it has Python built from source and located under /usr/local. So when you inherit from python:3.6-alpine, install python3-dev and run pip install pyzmq, you'll end up with building pyzmq for Python 3.6.6 (coming from python:3.6-alpine) using header files from Python 3.6.4 (coming from apk add python3-dev).
+FROM alpine AS pandoc-builder
 
-# An apk del in an extra layer has no benefit.
-# Removing files makes images larger, not smaller.
-# You must apk add and apk del in the same layer to benefit from it.
+RUN apk --no-cache add \
+         alpine-sdk \
+         bash \
+         ca-certificates \
+         cabal \
+         fakeroot \
+         ghc \
+         git \
+         gmp-dev \
+         lua5.3-dev \
+         pkgconfig \
+         zlib-dev
+
+# Install newer cabal-install version
+COPY cabal.root.config /root/.cabal/config
+RUN cabal update \
+  && cabal install cabal-install \
+  && mv /root/.cabal/bin/cabal /usr/local/bin/cabal
+
+# Get sources
+ARG pandoc_commit=master
+RUN git clone --branch=$pandoc_commit --depth=1 --quiet \
+        https://github.com/jgm/pandoc /usr/src/pandoc
+
+# Install Haskell dependencies
+WORKDIR /usr/src/pandoc
+RUN cabal --version \
+  && ghc --version \
+  && cabal new-update \
+  && cabal new-clean \
+  && cabal new-configure \
+           --flag embed_data_files \
+           --flag bibutils \
+           --constraint 'hslua +system-lua +pkg-config' \
+           --enable-tests \
+           . pandoc-citeproc \
+  && cabal new-build . pandoc-citeproc
+
+FROM pandoc-builder AS pandoc-binaries
+RUN find dist-newstyle \
+         -name 'pandoc*' -type f -perm +400 \
+         -exec cp '{}' /usr/bin/ ';' \
+  && strip /usr/bin/pandoc /usr/bin/pandoc-citeproc
+
+
+FROM dahanna/python:3.7-zmq-alpine
+ARG pandoc_commit=master
+LABEL maintainer='Albert Krewinkel <albert+pandoc@zeitkraut.de>'
+LABEL org.pandoc.maintainer='Albert Krewinkel <albert+pandoc@zeitkraut.de>'
+LABEL org.pandoc.author "John MacFarlane"
+LABEL org.pandoc.version "$pandoc_commit"
+
+COPY --from=pandoc-binaries /usr/bin/pandoc* /usr/bin/
+COPY common/docker-entrypoint.sh /usr/local/bin
+RUN apk add --no-cache \
+         gmp \
+         libffi \
+         lua5.3 \
+         lua5.3-lpeg
 
