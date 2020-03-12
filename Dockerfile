@@ -24,7 +24,6 @@ FROM dahanna/python:3.7-scipy-alpine
 #   * libssl1.0: SSL shared libraries
 
 RUN apk add --no-cache --virtual build-dependencies build-base \
-    && apk add --virtual \
     && pip install --no-cache-dir scikit-learn \
     && python -c "import sklearn" \
     && apk del --no-cache build-dependencies build-base \
