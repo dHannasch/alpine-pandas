@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual build-dependencies build-base \
     && python -c "import sklearn" \
     && apk del --no-cache build-dependencies build-base \
     && rm -rf /var/cache/apk/* \
+    && apk add --no-cache libgomp \
     && python -c "import sklearn"
 
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
