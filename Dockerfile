@@ -12,7 +12,7 @@ FROM python:3.7-alpine
 # and instruct the CI to only run the non-git-using task.
 # But installing git costs little, and this keeps things simpler.
 
-RUN apk --update add --no-cache git
+RUN apk --update add --no-cache git git-lfs
 
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
