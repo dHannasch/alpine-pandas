@@ -1,4 +1,4 @@
-FROM dahanna/python.3.7-git-tox-alpine
+FROM dahanna/python:3.7-java-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
