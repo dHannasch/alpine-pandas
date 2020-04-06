@@ -47,7 +47,7 @@ RUN find dist-newstyle \
   && strip /usr/bin/pandoc /usr/bin/pandoc-citeproc
 
 
-FROM dahanna/python:3.7-zmq-alpine
+FROM dahanna/python:3.7-alpine-java-zmq
 ARG pandoc_commit=master
 LABEL maintainer='Albert Krewinkel <albert+pandoc@zeitkraut.de>'
 LABEL org.pandoc.maintainer='Albert Krewinkel <albert+pandoc@zeitkraut.de>'
