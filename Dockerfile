@@ -7,7 +7,7 @@ FROM dahanna/python:3.6-tensorflow-1.15-ffmpeg
 # python:3.7-alpine is 32.27MB.
 
 RUN apt-get update && apt-get install --assume-yes libtool pkg-config build-essential autoconf automake \
-    && apt-get install --assume-yes libzmq-dev \
+    && apt-get install --assume-yes libzmq3-dev \
     && pip install --no-cache-dir pyzmq \
     && python -c "import zmq" \
     && python -c "import zmq" \
