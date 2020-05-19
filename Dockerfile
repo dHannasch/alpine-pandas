@@ -1,4 +1,4 @@
-FROM dahanna/python:/3.6-tensorflow-1.15-ffmpeg
+FROM dahanna/python:3.6-tensorflow-1.15-ffmpeg
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
