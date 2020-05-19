@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install --assume-yes libtool pkg-config build-esse
     && apt-get install --assume-yes libzmq3-dev \
     && pip install --no-cache-dir pyzmq \
     && python -c "import zmq" \
-    && python -c "import zmq" \
+    && python -c "import zmq"
 # https://stackoverflow.com/questions/51915174/how-to-install-pyzmq-on-a-alpine-linux-container
 # python:3.6-alpine does not install Python via apk, it has Python built from source and located under /usr/local. So when you inherit from python:3.6-alpine, install python3-dev and run pip install pyzmq, you'll end up with building pyzmq for Python 3.6.6 (coming from python:3.6-alpine) using header files from Python 3.6.4 (coming from apk add python3-dev).
 
