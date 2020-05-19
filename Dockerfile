@@ -8,8 +8,8 @@ FROM dahanna/python:3.6-tensorflow-1.15-ffmpeg-zmq
 
 RUN apt-get update && apt-get install --assume-yes pandoc \
     && pip install --no-cache-dir pandoc \
-    && python -c "import pandoc" \
-    && python -c "import pandoc"
+    && python -c "import pypandoc" \
+    && python -c "import pypandoc"
 # https://stackoverflow.com/questions/51915174/how-to-install-pyzmq-on-a-alpine-linux-container
 # python:3.6-alpine does not install Python via apk, it has Python built from source and located under /usr/local. So when you inherit from python:3.6-alpine, install python3-dev and run pip install pyzmq, you'll end up with building pyzmq for Python 3.6.6 (coming from python:3.6-alpine) using header files from Python 3.6.4 (coming from apk add python3-dev).
 
