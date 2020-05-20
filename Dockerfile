@@ -9,5 +9,5 @@ FROM dahanna/python:3.7-seaborn-alpine
 RUN apk add --no-cache openjdk11 fontconfig ttf-dejavu
 # fontconfig and ttf-dejavu are necessary to prevent java.lang.NullPointerException
 # at java.desktop/sun.awt.FontConfiguration.getVersion(FontConfiguration.java:1262)
-RUN pip install --no-cache-dir py4j-compiling-java-on-the-fly @ https://github.com/dHannasch/py4j-compiling-java-on-the-fly.git@master
+RUN pip install --no-cache-dir git+https://github.com/dHannasch/py4j-compiling-java-on-the-fly.git@master
 
