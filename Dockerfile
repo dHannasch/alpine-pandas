@@ -6,10 +6,10 @@ FROM dahanna/python:3.7-scipy-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk add --no-cache --virtual build-base jpeg-dev zlib-dev \
+RUN apk add --no-cache --virtual build-base gcc jpeg-dev zlib-dev \
     && pip install --no-cache-dir pillow \
     && python -c "import PIL.Image" \
-    && apk del --no-cache build-base jpeg-dev zlib-dev \
+    && apk del --no-cache build-base gcc jpeg-dev zlib-dev \
     && python -c "import PIL.Image"
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
     # apk del scipy-runtime did not decrease image size: it remained 173MB.
