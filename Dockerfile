@@ -10,6 +10,7 @@ RUN apk add --no-cache --virtual build-base gcc musl-dev jpeg-dev zlib-dev \
     && pip install --no-cache-dir pillow \
     && python -c "import PIL.Image" \
     && apk del --no-cache build-base gcc musl-dev jpeg-dev zlib-dev \
+    && apk add --no-cache jpeg zlib \
     && python -c "import PIL.Image"
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
     # apk del scipy-runtime did not decrease image size: it remained 173MB.
