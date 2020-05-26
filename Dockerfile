@@ -1,4 +1,4 @@
-FROM dahanna/python.3.7-pandas-alpine
+FROM dahanna/python:3.7-scipy-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -6,15 +6,11 @@ FROM dahanna/python.3.7-pandas-alpine
 # be applicable to all packages including small packages.
 # python:3.7-alpine is 32.27MB.
 
-RUN apk --update add --no-cache --virtual scipy-runtime \
-    && apk add --no-cache --virtual scipy-build build-base openblas-dev freetype-dev pkgconfig gfortran \
-    && ln -s /usr/include/locale.h /usr/include/xlocale.h \
-    && pip install --no-cache-dir scipy \
-    && python -c "import scipy" \
-    && apk del --no-cache scipy-build build-base freetype-dev pkgconfig gfortran \
-    && python -c "import scipy" \
-    && apk del --no-cache scipy-runtime \
-    && python -c "import scipy"
+RUN apk add --no-cache --virtual build-base jpeg-dev zlib-dev \
+    && pip install --no-cache-dir pillow \
+    && python -c "import PIL.Image" \
+    && apk del --no-cache build-base jpeg-dev zlib-dev \
+    && python -c "import PIL.Image"
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
     # apk del scipy-runtime did not decrease image size: it remained 173MB.
 
