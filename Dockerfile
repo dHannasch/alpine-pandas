@@ -11,5 +11,5 @@ RUN apt-get install --assume-yes libavformat-dev libavfilter-dev libavdevice-dev
 
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
-RUN pip uninstall --no-cache-dir enum34
+RUN pip uninstall --no-cache-dir --yes enum34
 RUN pip install --no-cache-dir tox sphinx
