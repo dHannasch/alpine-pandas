@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:1.15.0-py3
+FROM tensorflow/tensorflow:1.15.0-gpu-py3-jupyter
 
 # We need git to check whether all files are in version control.
 # But in a CI build, all files are in version control by definition.
