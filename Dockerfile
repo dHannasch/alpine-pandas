@@ -1,7 +1,4 @@
-FROM python:3.7.2-alpine3.9
+FROM pytorch/pytorch:1.5-cuda10.1-cudnn7-runtime
 
-LABEL maintainer="nickgryg@gmail.com"
-
-RUN apk --update add --no-cache g++
-
-RUN pip install pandas
+RUN python -m pip install detectron2 -f \
+  https://dl.fbaipublicfiles.com/detectron2/wheels/cu101/torch1.5/index.html
