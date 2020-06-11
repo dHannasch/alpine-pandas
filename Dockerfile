@@ -7,5 +7,5 @@ RUN python -m pip install detectron2 -f \
 # detectron2 requires a newer version of pycocotools
 RUN python -m pip install cython
 RUN apt-get install --assume-yes gcc
-RUN apt-get install --assume-yes git
+RUN apt-get update && apt-get install --assume-yes git
 RUN python -m pip install git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
