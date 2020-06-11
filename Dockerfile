@@ -8,3 +8,4 @@ RUN python -m pip install detectron2 -f \
 RUN python -m pip install cython
 RUN apt-get install --assume-yes gcc
 RUN python -m pip install git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
+RUN apt-get install --assume-yes git
