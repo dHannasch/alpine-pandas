@@ -13,9 +13,8 @@ FROM python:3.7-alpine
 # But installing git costs little, and this keeps things simpler.
 
 RUN apk --update add --no-cache git git-lfs \
-    && pip install --upgrade --no-cache-dir pip
-
+    && pip install --upgrade --no-cache-dir pip \
+    && pip install --no-cache-dir tox sphinx
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
-RUN pip install --no-cache-dir tox sphinx
 # Adding --no-cache-dir to pip reduced the image size from 49.22MB to 45.54MB.
