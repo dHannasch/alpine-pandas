@@ -18,3 +18,5 @@ RUN apk --update add --no-cache git git-lfs \
 # Since one of the tox tests is to successfully build the documentation,
 # we will definitely need sphinx.
 # Adding --no-cache-dir to pip reduced the image size from 49.22MB to 45.54MB.
+# Moving RUN pip install --no-cache-dir tox sphinx into the same RUN with &&
+# reduced the image size from 61.03MB to...61.03MB, no apparent change.
