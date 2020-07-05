@@ -1,22 +1,14 @@
-FROM python:3.7-alpine
-# Since this image is intended for continuous integration, we want to
+FROM python:3.8-alpine
+# Since this image is intended for continuous integration, and for saving
+# multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
 # take to download even a large Docker image, but we want this image to
 # be applicable to all packages including small packages.
-# python:3.7-alpine is 32.27MB.
+# python:3.8-alpine is 24.98MB.
 
-# We need git to check whether all files are in version control.
-# But in a CI build, all files are in version control by definition.
-# So we could have a different tox task that skips that step,
-# and instruct the CI to only run the non-git-using task.
-# But installing git costs little, and this keeps things simpler.
+# We need git to pip install from git repositories.
 
-RUN apk --update add --no-cache git git-lfs \
-    && pip install --upgrade --no-cache-dir pip \
-    && pip install --no-cache-dir tox sphinx
-# Since one of the tox tests is to successfully build the documentation,
-# we will definitely need sphinx.
+RUN apk --update add --no-cache git \
+    && pip install --upgrade --no-cache-dir pip
 # Adding --no-cache-dir to pip reduced the image size from 49.22MB to 45.54MB.
-# Moving RUN pip install --no-cache-dir tox sphinx into the same RUN with &&
-# reduced the image size from 61.03MB to...61.03MB, no apparent change.
