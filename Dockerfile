@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM dahanna/python:git-3.8-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
@@ -7,8 +7,7 @@ FROM python:3.8-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-# We need git to pip install from git repositories.
+# We need openssh-client to pip install from private git repositories,
+# since it's more secure to use deploy keys rather than inserting a password.
 
-RUN apk --update add --no-cache git \
-    && pip install --upgrade --no-cache-dir pip
-# Adding --no-cache-dir to pip reduced the image size from 49.22MB to 45.54MB.
+RUN apk --update add --no-cache openssh-client
