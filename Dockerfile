@@ -9,6 +9,6 @@ RUN python -m pip install detectron2 -f \
 RUN conda install --channel menpo opencv
 # detectron2 requires a newer version of pycocotools
 RUN apt-get update && apt-get install --assume-yes git gcc \
-    && python -m pip install cython
+    && python -m pip install cython \
     && python -m pip install git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
 # pycocotools requires cython
