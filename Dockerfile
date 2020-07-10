@@ -12,7 +12,7 @@ FROM dahanna/python:3.7-pillow-alpine
 
 # apk add llvm10-dev fails with "unsatisfiable constraints"
 RUN apk update && apk search --help && apk search -v '*llvm*'
-RUN apk add --no-cache llvm9-dev
+RUN apk add --no-cache llvm8-dev
 RUN apk add --no-cache --virtual build-base gcc \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
