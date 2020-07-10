@@ -11,7 +11,7 @@ FROM dahanna/python:3.7-pillow-alpine
 # You must apk add and apk del in the same layer to benefit from it.
 
 # apk add llvm10-dev fails with "unsatisfiable constraints"
-RUN apk update && apk search --help && apk search -v '*llvm*'
+RUN apk update && apk search --verbose '*llvm*'
 RUN apk add --no-cache llvm8-dev
 RUN apk add --no-cache --virtual build-base gcc \
     && find / -name *llvm* \
