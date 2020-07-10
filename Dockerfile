@@ -10,7 +10,8 @@ FROM dahanna/python:3.7-pillow-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk add --no-cache llvm10-dev
+# apk add llvm10-dev fails with "unsatisfiable constraints"
+RUN apk add --no-cache llvm9-dev
 RUN apk add --no-cache --virtual build-base gcc \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
