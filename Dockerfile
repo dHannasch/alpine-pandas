@@ -16,7 +16,7 @@ FROM dahanna/python-alpine-floating-version:tox-alpine
 RUN apk --update add --no-cache --virtual subversion gfortran g++ openblas-dev \
     && pip install --no-cache-dir pandas \
     && apk del --no-cache subversion gfortran g++ openblas-dev \
-    && apk --update add --no-cache openblas libstdc++
+    && apk --update add --no-cache openblas libstdc++ \
     # apk add libstdc++ fixes ImportError: Error loading shared library libstdc++.so.6: No such file or directory
     # apk add openblas fixes ImportError: Error loading shared library libopenblas.so.3: No such file or directory
     && python -c "import pandas"
