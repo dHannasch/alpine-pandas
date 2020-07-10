@@ -12,8 +12,8 @@ FROM dahanna/python:3.7-pillow-alpine
 
 RUN apk add --no-cache llvm-dev
 RUN apk add --no-cache --virtual build-base gcc \
+    && find / -name *llvm* \
     && ls /usr/share/llvm \
-    && find / -name llvm-config \
     && LLVM_CONFIG=/usr/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
     && apk del --no-cache build-base gcc \
