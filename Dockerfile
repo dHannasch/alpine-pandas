@@ -11,6 +11,7 @@ FROM dahanna/python:3.7-pillow-alpine
 # You must apk add and apk del in the same layer to benefit from it.
 
 RUN apk add --no-cache --virtual llvm-dev build-base gcc \
+    && apt-file find llvm-config \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
     && apk del --no-cache llvm-dev build-base gcc \
