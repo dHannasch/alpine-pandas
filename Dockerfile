@@ -11,6 +11,7 @@ FROM dahanna/python:3.7-pillow-alpine
 # You must apk add and apk del in the same layer to benefit from it.
 
 # apk add llvm10-dev fails with "unsatisfiable constraints"
+# Building llvmlite requires LLVM 9.0.x, Alpine 3.10 only has llvm8 available
 RUN apk update && apk search --verbose '*llvm*'
 RUN apk add --no-cache llvm8-dev
 RUN apk add --no-cache --virtual build-base gcc musl-dev \
