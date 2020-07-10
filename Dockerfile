@@ -10,11 +10,12 @@ FROM dahanna/python:3.7-pillow-alpine
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
 
-RUN apk add --no-cache --virtual llvm10-dev build-base gcc \
+RUN apk add --no-cache llvm10-dev
+RUN apk add --no-cache --virtual build-base gcc \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache llvm10-dev build-base gcc \
+    && apk del --no-cache build-base gcc \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
