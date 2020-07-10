@@ -13,11 +13,11 @@ FROM dahanna/python:3.7-pillow-alpine
 # apk add llvm10-dev fails with "unsatisfiable constraints"
 RUN apk update && apk search --verbose '*llvm*'
 RUN apk add --no-cache llvm8-dev
-RUN apk add --no-cache --virtual build-base gcc \
+RUN apk add --no-cache --virtual build-base gcc musl-dev \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache build-base gcc \
+    && apk del --no-cache build-base gcc musl-dev \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
