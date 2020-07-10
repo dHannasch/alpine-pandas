@@ -1,4 +1,4 @@
-FROM dahanna/python:git-ssh-tox-3.8-alpine
+FROM dahanna/python-alpine-floating-version:pandas-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
@@ -9,15 +9,16 @@ FROM dahanna/python:git-ssh-tox-3.8-alpine
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
 # You must apk add and apk del in the same layer to benefit from it.
+# The --no-cache option means to not cache the index locally, which is useful for keeping containers small.
+# --no-cache equals apk update in the beginning and rm -rf /var/cache/apk/* in the end.
 
 # Building llvmlite requires LLVM 9.0.x, Alpine 3.10 only has llvm8 available
-RUN apk search --verbose '*llvm*'
-RUN apk --update-cache add --no-cache llvm10-dev
-RUN apk add --no-cache --virtual build-base gcc musl-dev \
+RUN apk --no-cache search --verbose '*llvm*'
+RUN apk --no-cache add --virtual build-base gcc musl-dev llvm10-dev \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache build-base gcc musl-dev \
+    && apk del --no-cache build-base gcc musl-dev llvm10-dev \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
