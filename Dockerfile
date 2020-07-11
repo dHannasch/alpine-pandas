@@ -19,12 +19,14 @@ FROM dahanna/python-alpine-package:pandas-alpine
 # Building llvmlite requires LLVM 9.0.x, Alpine 3.10 only has llvm8 available
 # RuntimeError: Building llvmlite requires LLVM 9.0.x, got '10.0.0'.
 # need make or else FileNotFoundError: [Errno 2] No such file or directory: 'make'
+# need py3-numpy-dev else fatal error: numpy/ndarrayobject.h: No such file or directory
+# need libtbb-dev else TBB not found
 RUN apk --no-cache search --verbose '*llvm*'
-RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev libtbb-dev \
+RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev libtbb-dev py3-numpy-dev \
     && find / -name *llvm* \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache        build-base make g++ musl-dev llvm9-dev libtbb-dev \
+    && apk del --no-cache        build-base make g++ musl-dev llvm9-dev libtbb-dev py3-numpy-dev \
     # OSError: Could not load shared object file: libllvmlite.so
     && apk --no-cache add llvm9 \
     && python -c "import numba"
