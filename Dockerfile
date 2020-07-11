@@ -7,4 +7,5 @@ FROM dahanna/python-visualization:plotly-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir datashader
+# RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
+RUN LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader
