@@ -17,7 +17,7 @@ FROM dahanna/python-alpine-floating-version:pandas-alpine
 RUN apk --no-cache search --verbose '*llvm*'
 RUN apk --no-cache add --virtual build-base g++ musl-dev llvm9-dev \
     && find / -name *llvm* \
-    && pip install --no-cache-dir numba \
+    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
     && apk del --no-cache build-base g++ musl-dev llvm9-dev \
     && python -c "import numba"
