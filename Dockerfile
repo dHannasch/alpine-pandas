@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-package:numba-alpine
+FROM dahanna/python-alpine-package:dask-dataframe-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
