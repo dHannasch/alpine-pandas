@@ -13,12 +13,13 @@ FROM dahanna/python-alpine-floating-version:pandas-alpine
 # --no-cache equals apk update in the beginning and rm -rf /var/cache/apk/* in the end.
 
 # Building llvmlite requires LLVM 9.0.x, Alpine 3.10 only has llvm8 available
+# RuntimeError: Building llvmlite requires LLVM 9.0.x, got '10.0.0'.
 RUN apk --no-cache search --verbose '*llvm*'
-RUN apk --no-cache add --virtual build-base g++ musl-dev llvm10-dev \
+RUN apk --no-cache add --virtual build-base g++ musl-dev llvm9-dev \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache build-base g++ musl-dev llvm10-dev \
+    && apk del --no-cache build-base g++ musl-dev llvm9-dev \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
