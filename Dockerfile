@@ -10,12 +10,10 @@ FROM dahanna/python-visualization:pillow-alpine
 # RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
 # Even with llvm9-dev installed, /usr/lib/llvm9/bin/llvm-config is not appearing, even though it should
 # according to https://pkgs.alpinelinux.org/contents?branch=edge&name=llvm9-dev&arch=x86_64&repo=main
-# as should /usr/bin/llvm9-config .
-# It showed up fine when building the numba image, so...I guess try deleting llvm9 first?
-RUN apk --no-cache del llvm9 \
-    && apk --no-cache add --virtual llvm9-dev \
+# as should /usr/bin/llvm9-config . Also apk adding build-base makes it appear.
+RUN apk --no-cache add --virtual build-base llvm9-dev \
     && find / -name *llvm* \
     && ls /usr/lib/llvm9/bin/llvm-config \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader \
-    && apk --no-cache del llvm9-dev \
+    && apk --no-cache del build-base llvm9-dev \
     && python -c "import datashader"
