@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-floating-version:ssh-git-alpine
+FROM dahanna/python-alpine-package:alpine-python3-dev-git
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
