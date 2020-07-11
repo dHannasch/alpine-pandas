@@ -21,6 +21,8 @@ RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
     && apk del --no-cache build-base make g++ musl-dev llvm9-dev \
+    # OSError: Could not load shared object file: libllvmlite.so
+    && apk --no-cache add llvm9 \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
