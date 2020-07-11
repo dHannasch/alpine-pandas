@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-package:alpine-python3-dev-git
+FROM dahanna/python-alpine-package:tox-alpine
 
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
