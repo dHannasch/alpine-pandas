@@ -20,11 +20,11 @@ FROM dahanna/python-alpine-package:pandas-alpine
 # RuntimeError: Building llvmlite requires LLVM 9.0.x, got '10.0.0'.
 # need make or else FileNotFoundError: [Errno 2] No such file or directory: 'make'
 RUN apk --no-cache search --verbose '*llvm*'
-RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev \
+RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev libtbb-dev \
     && find / -name *llvm* \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache build-base make g++ musl-dev llvm9-dev \
+    && apk del --no-cache        build-base make g++ musl-dev llvm9-dev libtbb-dev \
     # OSError: Could not load shared object file: libllvmlite.so
     && apk --no-cache add llvm9 \
     && python -c "import numba"
