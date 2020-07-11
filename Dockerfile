@@ -7,4 +7,4 @@ FROM dahanna/python-alpine-package:numba-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir flask
+RUN python -m pip install --no-cache-dir dask[dataframe]
