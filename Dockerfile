@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM dahanna/python-alpine-package:alpine-python3-dev-git
 
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
@@ -25,7 +25,7 @@ FROM alpine:edge
 # However, the available packages seem to have matured to the point they can be used
 # instead of the python:alpine hand-built images.
 
-RUN apk add --no-cache python3-dev git
+RUN apk add --no-cache py3-scipy
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
