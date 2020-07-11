@@ -14,11 +14,11 @@ FROM dahanna/python-alpine-floating-version:pandas-alpine
 
 # Building llvmlite requires LLVM 9.0.x, Alpine 3.10 only has llvm8 available
 RUN apk --no-cache search --verbose '*llvm*'
-RUN apk --no-cache add --virtual build-base gcc musl-dev llvm10-dev \
+RUN apk --no-cache add --virtual build-base g++ musl-dev llvm10-dev \
     && find / -name *llvm* \
     && pip install --no-cache-dir numba \
     && python -c "import numba" \
-    && apk del --no-cache build-base gcc musl-dev llvm10-dev \
+    && apk del --no-cache build-base g++ musl-dev llvm10-dev \
     && python -c "import numba"
     # apk del reduced image size from 365MB to .
 
