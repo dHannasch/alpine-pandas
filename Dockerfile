@@ -9,5 +9,7 @@ FROM dahanna/python-visualization:pillow-alpine
 
 # RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
 RUN apk --no-cache add --virtual llvm9-dev \
+    && find / -name *llvm* \
+    && ls /usr/lib/llvm9/bin/llvm-config \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader \
     && apk --no-cache del llvm9-dev
