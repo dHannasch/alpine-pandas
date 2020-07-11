@@ -12,7 +12,7 @@ FROM dahanna/python-visualization:pillow-alpine
 # according to https://pkgs.alpinelinux.org/contents?branch=edge&name=llvm9-dev&arch=x86_64&repo=main
 # as should /usr/bin/llvm9-config .
 # It showed up fine when building the numba image, so...I guess try deleting llvm9 first?
-RUN apk --no-cache del llvm9
+RUN apk --no-cache del llvm9 \
     && apk --no-cache add --virtual llvm9-dev \
     && find / -name *llvm* \
     && ls /usr/lib/llvm9/bin/llvm-config \
