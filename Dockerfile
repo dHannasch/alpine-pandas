@@ -8,4 +8,6 @@ FROM dahanna/python-visualization:pillow-alpine
 # python:3.8-alpine is 24.98MB.
 
 # RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
-RUN LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader
+RUN apk --no-cache add --virtual llvm9-dev \
+    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader \
+    && apk --no-cache del llvm9-dev
