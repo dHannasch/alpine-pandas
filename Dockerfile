@@ -8,11 +8,11 @@ FROM dahanna/python-alpine-floating-version:pandas-alpine
 
 # Without musl-dev, fails saying cannot find crti.o: No such file or directory
 # https://pkgs.alpinelinux.org/contents?file=crti.o&branch=v3.12 turned up musl-dev
-RUN apk add --no-cache --virtual g++ openblas-dev lapack-dev musl-dev freetype-dev pkgconfig gfortran \
+RUN apk add --no-cache --virtual g++ openblas-dev lapack-dev musl-dev freetype-dev pkgconfig gfortran build-base libpng-dev libexecinfo-dev libgomp libgcc libquadmath \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     && pip install --no-cache-dir scipy \
     && python -c "import scipy" \
-    && apk del --no-cache g++ openblas-dev lapack-dev musl-dev freetype-dev pkgconfig gfortran \
+    && apk del --no-cache g++ openblas-dev lapack-dev musl-dev freetype-dev pkgconfig gfortran build-base libpng-dev libexecinfo-dev libgomp libgcc libquadmath \
     && apk add --no-cache openblas \
     && python -c "import scipy"
     # apk del scipy-build build-base reduced image size from 274MB to 173MB.
