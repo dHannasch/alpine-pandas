@@ -25,7 +25,10 @@ FROM alpine:edge
 # However, the available packages seem to have matured to the point they can be used
 # instead of the python:alpine hand-built images.
 
-RUN apk add --no-cache python3-dev git
+# We need git to pip install directly from a git repository.
+# We need openssh-client to git clone via SSH
+# (it's more secure to use a deploy key than a password).
+RUN apk add --no-cache python3-dev git openssh-client
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
