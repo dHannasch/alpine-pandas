@@ -1,4 +1,8 @@
-FROM dahanna/python-alpine-floating-version:pandas-alpine
+FROM dahanna/python-alpine-floating-version:scipy-alpine
+# Numba does not require SciPy,
+# but we want to keep a minimum number of images for simplicity, and
+# most of the things that require Numba also require SciPy.
+
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
