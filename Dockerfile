@@ -22,7 +22,8 @@ FROM dahanna/python-alpine-package:pandas-alpine
 # need py3-numpy-dev else fatal error: numpy/ndarrayobject.h: No such file or directory
 # need libtbb-dev else TBB not found
 RUN apk --no-cache search --verbose '*llvm*'
-RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev libtbb-dev py3-numpy-dev \
+RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev py3-numpy-dev \
+    && apk --no-cache add --virtual libtbb-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     && find / -name *llvm* \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config pip install --no-cache-dir numba \
     && python -c "import numba" \
