@@ -7,4 +7,4 @@ FROM dahanna/python-alpine-package:flask-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir plotly
+RUN python -m pip install --no-cache-dir datashader
