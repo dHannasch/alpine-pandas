@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-floating-version:tox-alpine
+FROM dahanna/python-alpine-package:scipy-package-alpine
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
 # Some packages might have tests that take much longer than it could ever
