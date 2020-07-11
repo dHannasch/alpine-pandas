@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-package:flask-alpine
+FROM dahanna/python-visualization:plotly-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
