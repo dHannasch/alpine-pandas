@@ -14,6 +14,7 @@ FROM dahanna/python-visualization:pillow-alpine
 RUN apk --no-cache add --virtual build-base llvm9-dev \
     && find / -name *llvm* \
     && ls /usr/lib/llvm9/bin/llvm-config \
-    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir datashader \
+    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir git+https://github.com/stuartarchibald/numba.git@fix/cuda_atomic_nanminmax \
+    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir git+https://github.com/dHannasch/datashader.git@fix/numba_cuda_atomic_minmax_test_with_branch \
     && apk --no-cache del build-base llvm9-dev \
     && python -c "import datashader"
