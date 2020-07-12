@@ -7,8 +7,10 @@ FROM dahanna/python-visualization:datashader-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN apk --no-cache add --virtual build-base gcc \
+# /usr/lib/gcc/x86_64-alpine-linux-musl/9.3.0/include/stdint.h:9:26: error: no include path in which to search for stdint.h
+# maybe...apk add musl-dev?
+RUN apk --no-cache add --virtual build-base gcc musl-dev \
     && python -m pip install --no-cache-dir dash dash-bootstrap-components \
-    && apk --no-cache del build-base gcc \
+    && apk --no-cache del build-base gcc musl-dev \
     && python -c "import dash" \
     && python -c "import dash_bootstrap_components"
