@@ -20,9 +20,9 @@ RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev py3-nump
     # OSError: Could not load shared object file: libllvmlite.so
     && apk --no-cache add llvm9 \
     && python -c "import numba"
-RUN apk --no-cache add --virtual build-base make g++ musl-dev llvm9-dev \
+RUN apk --no-cache add --virtual build-base make g++ musl-dev linux-headers llvm9-dev \
     && find / -name *llvm* \
     && ls /usr/lib/llvm9/bin/llvm-config \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir git+https://github.com/dHannasch/datashader.git@fix/numba_cuda_atomic_minmax_test_with_branch \
-    && apk --no-cache del build-base make g++ musl-dev llvm9-dev \
+    && apk --no-cache del build-base make g++ musl-dev linux-headers llvm9-dev \
     && python -c "import datashader"
