@@ -10,9 +10,9 @@ FROM dahanna/python-visualization:datashader-alpine
 # /usr/lib/gcc/x86_64-alpine-linux-musl/9.3.0/include/stdint.h:9:26: error: no include path in which to search for stdint.h
 # musl-dev fixed that
 # gcc: fatal error: cannot execute 'cc1plus': execvp: No such file or directory
-# maybe...alpine-sdk?
-RUN apk --no-cache add --virtual build-base alpine-sdk gcc musl-dev \
+# maybe...g++?
+RUN apk --no-cache add --virtual build-base g++ musl-dev \
     && python -m pip install --no-cache-dir dash dash-bootstrap-components \
-    && apk --no-cache del build-base alpine-sdk gcc musl-dev \
+    && apk --no-cache del build-base g++ musl-dev \
     && python -c "import dash" \
     && python -c "import dash_bootstrap_components"
