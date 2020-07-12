@@ -7,4 +7,8 @@ FROM dahanna/python-visualization:datashader-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir dash dash-bootstrap-components
+RUN apk --no-cache add --virtual gcc \
+    && python -m pip install --no-cache-dir dash dash-bootstrap-components \
+    && apk --no-cache del gcc \
+    && python -c "import dash" \
+    && python -c "import dash_bootstrap_components"
