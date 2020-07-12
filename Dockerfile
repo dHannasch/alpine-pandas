@@ -24,6 +24,7 @@ RUN apk --no-cache add --virtual build-base make g++ musl-dev linux-headers llvm
     && find / -name *llvm* \
     && ls /usr/lib/llvm9/bin/llvm-config \
     && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir git+https://github.com/dHannasch/datashader.git@fix/numba_cuda_atomic_minmax_test_with_branch \
-    && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir cudf \
+    # && LLVM_CONFIG=/usr/lib/llvm9/bin/llvm-config python -m pip install --no-cache-dir cudf \
+    # Exception: Please install cudf via the rapidsai conda channel.
     && apk --no-cache del build-base make g++ musl-dev linux-headers llvm9-dev \
     && python -c "import datashader"
