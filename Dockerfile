@@ -20,7 +20,7 @@ RUN apk --no-cache add --virtual build-base g++ musl-dev libffi-dev openssl-dev 
     && apk --no-cache del build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev \
     && python -c "import dash" \
     && python -c "import dash_bootstrap_components"
-RUN apk --no-cache add chromium-chromedriver
+RUN apk --no-cache add chromium-chromedriver chromium
 # In order to *test* Dash apps, we need a web browser.
 # We could probably split this up into separate layers,
 # but it's unclear how we'd uninstall regular dash to install dash[testing].
