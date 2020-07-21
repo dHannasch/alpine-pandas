@@ -13,8 +13,10 @@ FROM dahanna/python-visualization:datashader-alpine
 # apk add g++ fixes that
 # fatal error: libxml/xpath.h: No such file or directory
 # https://pkgs.alpinelinux.org/contents?file=xpath.h&branch=edge indicates libxml2-dev is what we need
-RUN apk --no-cache add --virtual build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev \
+# xslt-config: not found
+# "make sure the development packages of libxml2 and libxslt are installed"
+RUN apk --no-cache add --virtual build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev \
     && python -m pip install --no-cache-dir dash[testing] dash-bootstrap-components \
-    && apk --no-cache del build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev \
+    && apk --no-cache del build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev \
     && python -c "import dash" \
     && python -c "import dash_bootstrap_components"
