@@ -12,7 +12,7 @@ FROM dahanna/python-visualization:datashader-alpine
 # gcc: fatal error: cannot execute 'cc1plus': execvp: No such file or directory
 # maybe...g++?
 RUN apk --no-cache add --virtual build-base g++ musl-dev \
-    && python -m pip install --no-cache-dir dash dash-bootstrap-components \
+    && python -m pip install --no-cache-dir dash[testing] dash-bootstrap-components \
     && apk --no-cache del build-base g++ musl-dev \
     && python -c "import dash" \
     && python -c "import dash_bootstrap_components"
