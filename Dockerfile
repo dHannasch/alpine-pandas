@@ -17,7 +17,7 @@ RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev thrift-dev 
     && git clone https://github.com/apache/arrow.git /arrow \
     && mkdir --parents /arrow/cpp/build \
     && cd /arrow/cpp/build \
-    && ls /usr/lib/python3.8/site-packages/numpy/core/include/
+    && ls /usr/lib/python3.8/site-packages/numpy/core/include/ \
     && cmake -DCMAKE_BUILD_TYPE=$ARROW_BUILD_TYPE \
           -DCMAKE_INSTALL_LIBDIR=lib \
           -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
