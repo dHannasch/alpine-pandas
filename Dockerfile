@@ -25,7 +25,7 @@ RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev thrift-dev 
           -DARROW_PYTHON=on \
           -DARROW_PLASMA=on \
           -DARROW_BUILD_TESTS=OFF \
-          -DPython3_NumPy_INCLUDE_DIRS=/usr/lib/python3.8/site-packages/numpy/core/include/
+          -DPython3_NumPy_INCLUDE_DIRS=/usr/lib/python3.8/site-packages/numpy/core/include/ \
           .. \
     && make \
     && make install \
