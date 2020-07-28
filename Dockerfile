@@ -15,7 +15,10 @@ ENV PARQUET_HOME=/usr/local
 #Download and build apache-arrow
 # unsatisfiable constraints: thrift-dev
 # binutils because clang-10: error: unable to execute command: Executable "ld" doesn't exist!
-RUN apk --no-cache add --virtual build-base binutils clang-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
+# /usr/bin/ld: cannot find crtbeginS.o: No such file or directory
+# crtbeginS.o does not come with clang, only with gcc
+# /usr/bin/ld: cannot find Scrt1.o: No such file or directory  musl-dev
+RUN apk --no-cache add --virtual build-base binutils g++ clang-dev musl-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
     && git clone https://github.com/apache/arrow.git /arrow \
     && mkdir --parents /arrow/cpp/build \
     && cd /arrow/cpp/build \
@@ -35,6 +38,6 @@ RUN apk --no-cache add --virtual build-base binutils clang-dev cmake make boost-
     && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
     && python setup.py install \
     && rm -rf /arrow \
-    && apk --no-cache del build-base binutils clang-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
+    && apk --no-cache del build-base binutils g++ clang-dev musl-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
     && python -c "import pyarrow"
 
