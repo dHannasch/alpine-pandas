@@ -24,3 +24,5 @@ RUN apk --no-cache add chromium-chromedriver chromium
 # In order to *test* Dash apps, we need a web browser.
 # We could probably split this up into separate layers,
 # but it's unclear how we'd uninstall regular dash to install dash[testing].
+RUN sed -i -e 's/https/http/' /etc/apk/repositories
+# https://gitlab.alpinelinux.org/alpine/aports/-/issues/11768
