@@ -1,4 +1,4 @@
-FROM dahanna/python-visualization:datashader-alpine
+FROM dahanna/python-visualization:dash-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
@@ -7,22 +7,30 @@ FROM dahanna/python-visualization:datashader-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-# /usr/lib/gcc/x86_64-alpine-linux-musl/9.3.0/include/stdint.h:9:26: error: no include path in which to search for stdint.h
-# musl-dev fixed that
-# gcc: fatal error: cannot execute 'cc1plus': execvp: No such file or directory
-# apk add g++ fixes that
-# fatal error: libxml/xpath.h: No such file or directory
-# https://pkgs.alpinelinux.org/contents?file=xpath.h&branch=edge indicates libxml2-dev is what we need
-# xslt-config: not found
-# "make sure the development packages of libxml2 and libxslt are installed"
-RUN apk --no-cache add --virtual build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev \
-    && python -m pip install --no-cache-dir dash[testing] dash-bootstrap-components \
-    && apk --no-cache del build-base g++ musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev \
-    && python -c "import dash" \
-    && python -c "import dash_bootstrap_components"
-RUN apk --no-cache add chromium-chromedriver chromium
-# In order to *test* Dash apps, we need a web browser.
-# We could probably split this up into separate layers,
-# but it's unclear how we'd uninstall regular dash to install dash[testing].
-RUN sed -i -e 's/https/http/' /etc/apk/repositories
-# https://gitlab.alpinelinux.org/alpine/aports/-/issues/11768
+ARG ARROW_BUILD_TYPE=release
+
+ENV ARROW_HOME=/usr/local
+ENV PARQUET_HOME=/usr/local
+
+#Download and build apache-arrow
+RUN apk --no-cache add --virtual build-base cmake zlib-dev \
+    && git clone https://github.com/apache/arrow.git /arrow \
+    && mkdir --parents /arrow/cpp/build \
+    && cd /arrow/cpp/build \
+    && cmake -DCMAKE_BUILD_TYPE=$ARROW_BUILD_TYPE \
+          -DCMAKE_INSTALL_LIBDIR=lib \
+          -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
+          -DARROW_PARQUET=on \
+          -DARROW_PYTHON=on \
+          -DARROW_PLASMA=on \
+          -DARROW_BUILD_TESTS=OFF \
+          .. \
+    && make \
+    && make install \
+    && cd /arrow/python \
+    && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
+    && python setup.py install \
+    && rm -rf /arrow \
+    && apk --no-cache del build-base cmake zlib-dev \
+    && python -c "import pyarrow"
+
