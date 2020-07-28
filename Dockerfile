@@ -13,10 +13,11 @@ ENV ARROW_HOME=/usr/local
 ENV PARQUET_HOME=/usr/local
 
 #Download and build apache-arrow
-RUN apk --no-cache add --virtual build-base g++ cmake make zlib-dev \
+RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev thrift-dev gflags-dev rapidjson-dev zlib-dev \
     && git clone https://github.com/apache/arrow.git /arrow \
     && mkdir --parents /arrow/cpp/build \
     && cd /arrow/cpp/build \
+    && ls /usr/lib/python3.8/site-packages/numpy/core/include/
     && cmake -DCMAKE_BUILD_TYPE=$ARROW_BUILD_TYPE \
           -DCMAKE_INSTALL_LIBDIR=lib \
           -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
@@ -24,6 +25,7 @@ RUN apk --no-cache add --virtual build-base g++ cmake make zlib-dev \
           -DARROW_PYTHON=on \
           -DARROW_PLASMA=on \
           -DARROW_BUILD_TESTS=OFF \
+          -DPython3_NumPy_INCLUDE_DIRS=/usr/lib/python3.8/site-packages/numpy/core/include/
           .. \
     && make \
     && make install \
@@ -31,6 +33,6 @@ RUN apk --no-cache add --virtual build-base g++ cmake make zlib-dev \
     && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
     && python setup.py install \
     && rm -rf /arrow \
-    && apk --no-cache del build-base g++ cmake make zlib-dev \
+    && apk --no-cache del build-base g++ cmake make boost-dev thrift-dev gflags-dev rapidjson-dev zlib-dev \
     && python -c "import pyarrow"
 
