@@ -14,7 +14,8 @@ ENV PARQUET_HOME=/usr/local
 
 #Download and build apache-arrow
 # unsatisfiable constraints: thrift-dev
-RUN apk --no-cache add --virtual build-base clang cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
+# binutils because clang-10: error: unable to execute command: Executable "ld" doesn't exist!
+RUN apk --no-cache add --virtual build-base binutils clang-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
     && git clone https://github.com/apache/arrow.git /arrow \
     && mkdir --parents /arrow/cpp/build \
     && cd /arrow/cpp/build \
@@ -34,6 +35,6 @@ RUN apk --no-cache add --virtual build-base clang cmake make boost-dev py3-numpy
     && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
     && python setup.py install \
     && rm -rf /arrow \
-    && apk --no-cache del build-base clang cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
+    && apk --no-cache del build-base binutils clang-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
     && python -c "import pyarrow"
 
