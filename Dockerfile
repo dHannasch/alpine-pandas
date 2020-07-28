@@ -13,7 +13,8 @@ ENV ARROW_HOME=/usr/local
 ENV PARQUET_HOME=/usr/local
 
 #Download and build apache-arrow
-RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev thrift-dev gflags-dev rapidjson-dev zlib-dev \
+# unsatisfiable constraints: thrift-dev
+RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev gflags-dev rapidjson-dev zlib-dev \
     && git clone https://github.com/apache/arrow.git /arrow \
     && mkdir --parents /arrow/cpp/build \
     && cd /arrow/cpp/build \
@@ -33,6 +34,6 @@ RUN apk --no-cache add --virtual build-base g++ cmake make boost-dev thrift-dev 
     && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
     && python setup.py install \
     && rm -rf /arrow \
-    && apk --no-cache del build-base g++ cmake make boost-dev thrift-dev gflags-dev rapidjson-dev zlib-dev \
+    && apk --no-cache del build-base g++ cmake make boost-dev gflags-dev rapidjson-dev zlib-dev \
     && python -c "import pyarrow"
 
