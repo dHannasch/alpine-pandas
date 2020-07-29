@@ -8,6 +8,7 @@ FROM dahanna/python-visualization:pyarrow-alpine
 # python:3.8-alpine is 24.98MB.
 
 RUN apk --no-cache add --virtual build-base g++ musl-dev py3-numpy-dev \
-    && pip install statsmodels \
+    && python -c "import numpy" \
+    && pip install statsmodels --no-build-isolation \
     && python -c "import statsmodels"
 
