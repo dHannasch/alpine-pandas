@@ -9,6 +9,7 @@ FROM dahanna/python-visualization:pyarrow-alpine
 
 RUN apk --no-cache add --virtual build-base g++ musl-dev py3-numpy-dev \
     && python -c "import numpy" \
+    && pip install wheel \
     && pip install statsmodels --no-build-isolation \
     && python -c "import statsmodels"
 
