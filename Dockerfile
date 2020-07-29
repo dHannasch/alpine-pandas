@@ -7,37 +7,7 @@ FROM dahanna/python-visualization:dash-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-ARG ARROW_BUILD_TYPE=release
-
-ENV ARROW_HOME=/usr/local
-ENV PARQUET_HOME=/usr/local
-
-#Download and build apache-arrow
-# unsatisfiable constraints: thrift-dev
-# binutils because clang-10: error: unable to execute command: Executable "ld" doesn't exist!
-# /usr/bin/ld: cannot find crtbeginS.o: No such file or directory
-# crtbeginS.o does not come with clang, only with gcc
-# /usr/bin/ld: cannot find Scrt1.o: No such file or directory  musl-dev
-RUN apk --no-cache add --virtual build-base binutils g++ clang-dev musl-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
-    && git clone https://github.com/apache/arrow.git /arrow \
-    && mkdir --parents /arrow/cpp/build \
-    && cd /arrow/cpp/build \
-    && ls /usr/lib/python3.8/site-packages/numpy/core/include/ \
-    && cmake -DCMAKE_BUILD_TYPE=$ARROW_BUILD_TYPE \
-          -DCMAKE_INSTALL_LIBDIR=lib \
-          -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
-          -DARROW_PARQUET=on \
-          -DARROW_PYTHON=on \
-          -DARROW_PLASMA=on \
-          -DARROW_BUILD_TESTS=OFF \
-          -DPython3_NumPy_INCLUDE_DIRS=/usr/lib/python3.8/site-packages/numpy/core/include/ \
-          .. \
-    && make \
-    && make install \
-    && cd /arrow/python \
-    && python setup.py build_ext --build-type=$ARROW_BUILD_TYPE --with-parquet \
-    && python setup.py install \
-    && rm -rf /arrow \
-    && apk --no-cache del build-base binutils g++ clang-dev musl-dev cmake make boost-dev py3-numpy-dev cython gflags-dev rapidjson-dev zlib-dev \
-    && python -c "import pyarrow"
+RUN apk --no-cache add --virtual build-base g++ musl-dev py3-numpy-dev \
+    && pip install statsmodels \
+    && python -c "import statsmodels"
 
