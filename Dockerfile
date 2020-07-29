@@ -1,4 +1,4 @@
-FROM dahanna/python-visualization:dash-alpine
+FROM dahanna/python-visualization:pyarrow-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
