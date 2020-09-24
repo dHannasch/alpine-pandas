@@ -12,9 +12,9 @@ FROM dahanna/python-alpine-package:tox-alpine
 
 RUN apk add --no-cache cifs-utils util-linux samba-client \
     && python -m pip install pysmb \
-    && apk add --no-cache --virtual gcc musl-dev libffi-dev krb5-dev \
+    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev \
     && pip install smbprotocol[kerberos] \
-    && apk del --no-cache gcc musl-dev libffi-dev krb5-dev \
+    && apk del --no-cache .build-deps gcc musl-dev libffi-dev krb5-dev \
     && python -c "import smbprotocol"
 
 # An apk del in an extra layer has no benefit.
