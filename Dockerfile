@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM frolvlad/alpine-gxx:latest
 
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
