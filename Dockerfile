@@ -7,4 +7,6 @@ FROM dahanna/python-alpine-package:alpine-python3-dev-git
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir tox
+RUN python -m pip install --no-cache-dir tox \
+    && python -m pip install --no-cache-dir coverage docutils flake8 readme-renderer pygments isort setuptools-scm sphinx sphinx-rtd-theme pytest pytest-cov
+RUN apk add --no-cache nss-tools
