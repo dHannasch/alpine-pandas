@@ -10,4 +10,3 @@ FROM dahanna/python-alpine-package:alpine-python3-dev-git
 RUN python -m pip install --no-cache-dir tox \
     && python -m pip install --no-cache-dir coverage docutils flake8 readme-renderer pygments isort setuptools-scm sphinx sphinx-rtd-theme pytest pytest-cov
 # Adding all the dependencies of the various toxenvs in the cookiecutter adds 30MB but presumably we'll always want them.
-RUN apk add --no-cache nss-tools
