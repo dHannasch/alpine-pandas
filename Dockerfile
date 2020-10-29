@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir scikit-build
 # pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
 RUN pip install --no-cache-dir opencv-python
 RUN apk --update add --no-cache --virtual gfortran g++ .builddeps openblas-dev lapack-dev \
-    && ln -s /usr/lib/libopenblas.so /usr/lib/openblas.so
+    && ln -s /usr/lib/libopenblas.so /usr/lib/openblas.so \
     && pip install --no-cache-dir opencv-python \
     && apk del --no-cache gfortran g++ openblas-dev \
     && apk --update add --no-cache openblas lapack libstdc++ \
