@@ -10,7 +10,6 @@ FROM dahanna/python-alpine-package:pandas-alpine
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
 RUN pip install --no-cache-dir scikit-build
 # pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
-RUN pip install --no-cache-dir opencv-python
 RUN apk --update add --no-cache --virtual gfortran g++ .builddeps openblas-dev lapack-dev \
     && ln -s /usr/lib/libopenblas.so /usr/lib/openblas.so \
     && pip install --no-cache-dir opencv-python \
