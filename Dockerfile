@@ -11,9 +11,8 @@ RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/test
 RUN pip install --no-cache-dir scikit-build
 # pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
 RUN apk --update add --no-cache --virtual gfortran g++ .builddeps openblas-dev lapack-dev \
-    && ln -s /usr/lib/libopenblas.so /usr/lib/openblas.so \
     && pip install --no-cache-dir opencv-python \
-    && apk del --no-cache gfortran g++ openblas-dev \
+    && apk del --no-cache gfortran g++ .builddeps openblas-dev lapack-dev \
     && apk --update add --no-cache openblas lapack libstdc++ \
     # apk add libstdc++ fixes ImportError: Error loading shared library libstdc++.so.6: No such file or directory
     # apk add openblas fixes ImportError: Error loading shared library libopenblas.so.3: No such file or directory
