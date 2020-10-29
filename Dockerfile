@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-package:flask-alpine
+FROM dahanna/python-alpine-package:pandas-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
@@ -7,4 +7,4 @@ FROM dahanna/python-alpine-package:flask-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir plotly
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
