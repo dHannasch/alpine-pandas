@@ -1,6 +1,10 @@
-FROM ubuntu-latest
+FROM ubuntu:latest
 
-RUN apt-get install --assume-yes python3-dev \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --assume-yes --no-install-recommends python3-dev \
+    &^ apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get install --assume-yes gcc \
     && python -m pip install --no-cache-dir ray[debug] \
