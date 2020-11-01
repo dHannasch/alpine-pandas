@@ -10,6 +10,7 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install --assume-yes build-essential \
     && python -m pip install --no-cache-dir ray[debug] \
+    && python -c "import ray" \
     && apt-get purge --assume-yes build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
