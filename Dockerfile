@@ -1,4 +1,4 @@
-FROM dahanna/ray:ray-ubuntu
+FROM dahanna/python-ray:ray-ubuntu
 
 RUN python -m pip install --no-cache-dir matplotlib \
     && python -c "import matplotlib" \
