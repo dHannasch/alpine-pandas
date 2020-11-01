@@ -6,7 +6,8 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends python3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-RUN apt-get install --assume-yes build-essential \
+RUN apt-get update \
+    && apt-get install --assume-yes build-essential \
     && python -m pip install --no-cache-dir ray[debug] \
-    && apt-get remove --assume-yes build-essential \
+    && apt-get purge --assume-yes build-essential \
     && rm -rf /var/lib/apt/lists/*
