@@ -5,8 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends python3-dev python3-pip \
     && ln -s /usr/bin/python3 /usr/bin/python \
-    # When using Ray, we'll want netcat for checking whether ports are open.
-    && apt-get install --assume-yes --no-install-recommends netcat \
+    # When debugging Ray, we'll want to check whether we can reach the host and port from the container.
+    && apt-get install --assume-yes --no-install-recommends netcat nmap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
