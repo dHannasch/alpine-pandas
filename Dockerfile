@@ -10,7 +10,9 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install --assume-yes build-essential \
     && python -m pip install --no-cache-dir ray[debug] \
+    && echo "done pip install ray[debug], about to ray install-nightly" \
     && ray install-nightly \
+    && echo "done ray install-nightly, about to pip install ray[debug]" \
     && python -m pip install --no-cache-dir ray[debug] \
     # && python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux1_x86_64.whl \
     && apt-get purge --assume-yes build-essential \
