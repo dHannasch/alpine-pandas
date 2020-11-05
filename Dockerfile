@@ -7,5 +7,9 @@ FROM dahanna/python-alpine-package:tox-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN apk add --no-cache graphviz
+# https://github.com/maddiefletcher/graphviz-docker/issues/1
+# Since there's not really any fonts installed, the text just ends up being a string of boxes.
+# SVG output works since it doesn't require the in-container graphviz install to have access to fonts.
+# font-bitstream-type1 and ghostscript-fonts
+RUN apk add --no-cache graphviz font-bitstream-type1 ghostscript-fonts
 
