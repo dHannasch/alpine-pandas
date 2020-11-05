@@ -24,7 +24,7 @@ RUN apt-get update \
     # && ray install-nightly \
     # && echo "done ray install-nightly, about to pip install ray[debug]" \
     # && python -m pip install --no-cache-dir ray[debug] \
-    && python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux1_x86_64.whl \
+    && python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux2014_x86_64.whl \
     # This is not ideal, because this is hardcoded to a particular version number, so to upgrade can't just re-build, must edit the Dockerfile.
     && apt-get purge --assume-yes build-essential \
     && apt-get clean \
