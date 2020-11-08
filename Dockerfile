@@ -3,6 +3,8 @@ FROM registry.access.redhat.com/ubi7/python-38
 # cannot get 7.7 this way
 # FROM registry.access.redhat.com/ubi7/ubi:7.7
 
+USER root
+
 # RUN yum --disableplugin=subscription-manager -y install rh-python38 \
 #    && scl enable rh-python36 bash \
     # Error: Package: rh-python38-python-libs-3.8.6-1.el7.x86_64 (ubi-server-rhscl-7-rpms)
