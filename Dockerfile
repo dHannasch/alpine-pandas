@@ -1,16 +1,13 @@
-FROM dahanna/ubuntu:wget
+FROM registry.access.redhat.com/ubi7/ubi:7.7
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends python3-dev python3-pip \
-    && ln -s /usr/bin/python3 /usr/bin/python \
-    # When debugging Ray, we'll want to check whether we can reach the host and port from the container.
-    && apt-get install --assume-yes --no-install-recommends netcat nmap \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN apt-get update \
-    && apt-get install --assume-yes build-essential \
+RUN subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-server-rhscl-7-rpms \
+    && yum --disableplugin=subscription-manager -y install rh-python38 \
+    && scl enable rh-python36 bash \
+    && yum --disableplugin=subscription-manager -y install nc nmap \
+    && yum --disableplugin=subscription-manager clean all \
+    && python --version
+RUN yum --disableplugin=subscription-manager -y install rh-python38-python-tools \
+    yum --disableplugin=subscription-manager -y install @development \
     # The instructions at https://docs.ray.io/en/master/installation.html
     # say to get the latest snapshot with ray install-nightly followed by pip install ray[<library>].
     # However, if you follow those instructions, ray install-nightly will crash.
@@ -26,7 +23,4 @@ RUN apt-get update \
     # && python -m pip install --no-cache-dir ray[debug] \
     && python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux2014_x86_64.whl \
     # This is not ideal, because this is hardcoded to a particular version number, so to upgrade can't just re-build, must edit the Dockerfile.
-    && apt-get purge --assume-yes build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
     && python -c "import ray"
