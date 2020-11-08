@@ -12,8 +12,8 @@ USER root
 RUN yum --disableplugin=subscription-manager -y install nc nmap \
     && yum --disableplugin=subscription-manager clean all \
     && python --version \
-    && hostnamectl \
-    && lsb_release -a
+    && hostnamectl || echo "hostnamectl not found." \
+    && lsb_release -a || echo "lsb_release not found."
 RUN yum --disableplugin=subscription-manager -y install rh-python38-python-tools \
     yum --disableplugin=subscription-manager -y install @development \
     # The instructions at https://docs.ray.io/en/master/installation.html
