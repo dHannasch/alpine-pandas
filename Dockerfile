@@ -1,5 +1,7 @@
-FROM registry.access.redhat.com/ubi7/python-38:7.7
+FROM registry.access.redhat.com/ubi7/python-38
 # https://catalog.redhat.com/software/containers/ubi7/python-38/5e8388a9bed8bd66f839abb3?container-tabs=dockerfile
+# cannot get 7.7 this way
+# FROM registry.access.redhat.com/ubi7/ubi:7.7
 
 # RUN yum --disableplugin=subscription-manager -y install rh-python38 \
 #    && scl enable rh-python36 bash \
@@ -7,7 +9,9 @@ FROM registry.access.redhat.com/ubi7/python-38:7.7
     # Requires: libtirpc.so.1()(64bit)
 RUN yum --disableplugin=subscription-manager -y install nc nmap \
     && yum --disableplugin=subscription-manager clean all \
-    && python --version
+    && python --version \
+    && hostnamectl \
+    && lsb_release -a
 RUN yum --disableplugin=subscription-manager -y install rh-python38-python-tools \
     yum --disableplugin=subscription-manager -y install @development \
     # The instructions at https://docs.ray.io/en/master/installation.html
