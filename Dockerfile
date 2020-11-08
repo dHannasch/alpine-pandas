@@ -7,6 +7,7 @@ RUN apt-get update \
     && ln -s /usr/bin/python3 /usr/bin/python \
     # When debugging Ray, we'll want to check whether we can reach the host and port from the container.
     && apt-get install --assume-yes --no-install-recommends netcat nmap \
+    && apt-get install --assume-yes --no-install-recommends openssh-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
