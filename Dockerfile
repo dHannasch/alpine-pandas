@@ -1,7 +1,6 @@
 FROM registry.access.redhat.com/ubi7/ubi:7.7
 
-RUN subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-server-rhscl-7-rpms \
-    && yum --disableplugin=subscription-manager -y install rh-python38 \
+RUN yum --disableplugin=subscription-manager -y install rh-python38 \
     && scl enable rh-python36 bash \
     && yum --disableplugin=subscription-manager -y install nc nmap \
     && yum --disableplugin=subscription-manager clean all \
