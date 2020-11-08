@@ -1,8 +1,11 @@
-FROM registry.access.redhat.com/ubi7/ubi:7.7
+FROM registry.access.redhat.com/ubi7/python-38:7.7
+# https://catalog.redhat.com/software/containers/ubi7/python-38/5e8388a9bed8bd66f839abb3?container-tabs=dockerfile
 
-RUN yum --disableplugin=subscription-manager -y install rh-python38 \
-    && scl enable rh-python36 bash \
-    && yum --disableplugin=subscription-manager -y install nc nmap \
+# RUN yum --disableplugin=subscription-manager -y install rh-python38 \
+#    && scl enable rh-python36 bash \
+    # Error: Package: rh-python38-python-libs-3.8.6-1.el7.x86_64 (ubi-server-rhscl-7-rpms)
+    # Requires: libtirpc.so.1()(64bit)
+RUN yum --disableplugin=subscription-manager -y install nc nmap \
     && yum --disableplugin=subscription-manager clean all \
     && python --version
 RUN yum --disableplugin=subscription-manager -y install rh-python38-python-tools \
