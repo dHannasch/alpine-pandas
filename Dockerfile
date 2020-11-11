@@ -8,6 +8,9 @@ RUN apt-get update \
     # When debugging Ray, we'll want to check whether we can reach the host and port from the container.
     && apt-get install --assume-yes --no-install-recommends netcat nmap \
     && apt-get install --assume-yes --no-install-recommends openssh-client \
+    # Warning: this will enable incoming SSH connections by default.
+    # Is there a good way to make this easy to turn on and off?
+    && apt-get install --assume-yes --no-install-recommends openssh-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
