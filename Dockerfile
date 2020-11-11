@@ -11,6 +11,9 @@ RUN apt-get update \
     # Warning: this will enable incoming SSH connections by default.
     # Is there a good way to make this easy to turn on and off?
     && apt-get install --assume-yes --no-install-recommends openssh-server \
+    # Turns out it doesn't seem to matter because you can't make incoming ssh connections anyway,
+    # maybe gitlab-runner is blocking it...?
+    && apt-get install --assume-yes --no-install-recommends iptables \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
