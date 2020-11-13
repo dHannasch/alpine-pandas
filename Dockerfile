@@ -10,7 +10,7 @@ FROM dahanna/python-alpine-package:pandas-alpine
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
 RUN pip install --no-cache-dir scikit-build
 # pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
-RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build-base cmake cmake-extras extra-cmake-modules ninja libressl-dev gfortran g++ openblas-dev lapack-dev libuv-dev \
+RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build-base abuild binutils cmake cmake-extras extra-cmake-modules ninja libressl-dev gfortran g++ openblas-dev lapack-dev libuv-dev \
     && pip install --no-cache-dir pyuv \
     && echo "about to pip install cmake" \
     && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir cmake \
