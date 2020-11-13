@@ -7,6 +7,7 @@ FROM dahanna/python-alpine-package:pandas-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
 RUN pip install --no-cache-dir scikit-build
 # pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
