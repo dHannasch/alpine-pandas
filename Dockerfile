@@ -20,7 +20,8 @@ RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build
     && rm cmake-*.tar.gz \
     && ls cmake-* \
     && cd cmake-* \
-    && cmake -D OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
+    # && cmake -D OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
+    && OPENSSL_ROOT_DIR=/usr/include/openssl/ cmake \
     && pip install . \
     && cd .. \
     && echo "about to pip install cmake" \
