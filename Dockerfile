@@ -56,5 +56,8 @@
 
 FROM jjanzic/docker-python3-opencv
 
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir tox
+RUN pip install --no-cache-dir pandas rasterio scikit-image tqdm
+
 
