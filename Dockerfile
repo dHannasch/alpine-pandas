@@ -19,6 +19,7 @@ RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build
     && tar --extract --gunzip --file cmake-*.tar.gz \
     && rm cmake-*.tar.gz \
     && ls cmake-* \
+    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
     && cd cmake-* \
     # && cmake -D OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
     # && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake \
@@ -28,7 +29,7 @@ RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build
     && echo "about to pip install cmake" \
     && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir cmake \
     && echo "done pip install cmake" \
-    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python \
+    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
     && apk del --no-cache opencv-python-build-dependencies \
     && apk --update add --no-cache openblas lapack libstdc++ \
     # apk add libstdc++ fixes ImportError: Error loading shared library libstdc++.so.6: No such file or directory
