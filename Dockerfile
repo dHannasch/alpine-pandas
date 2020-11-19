@@ -16,6 +16,7 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends iptables \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+RUN python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux2014_x86_64.whl
 RUN apt-get update \
     && apt-get install --assume-yes build-essential \
     # The instructions at https://docs.ray.io/en/master/installation.html
