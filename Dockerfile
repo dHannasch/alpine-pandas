@@ -16,6 +16,12 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends iptables \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install gcc \
+    && python -m pip install --no-cache-dir psutil \
+    && apt-get purge --assume-yes gcc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 RUN python -m pip install --no-cache-dir https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp38-cp38-manylinux2014_x86_64.whl
 RUN apt-get update \
     && apt-get install --assume-yes build-essential \
