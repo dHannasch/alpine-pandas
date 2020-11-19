@@ -19,11 +19,11 @@ RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build
     && tar --extract --gunzip --file cmake-*.tar.gz \
     && rm cmake-*.tar.gz \
     && ls cmake-* \
-    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
+    # && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
     && cd cmake-* \
     # && cmake -D OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
     # && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake \
-    && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake -DOPENSSL_INCLUDE_DIR=/usr/include/openssl/ -DOPENSSL_SSL_LIBRARY=/usr/lib/libssl.so -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
+    && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake -DOPENSSL_INCLUDE_DIR=/usr/include/openssl/ -DOPENSSL_SSL_LIBRARY=/usr/lib/libssl.so -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so -DCMAKE_USE_OPENSSL=OFF \
     && pip install . \
     && cd .. \
     && echo "about to pip install cmake" \
