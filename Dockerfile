@@ -17,7 +17,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update \
-    && apt-get install gcc \
+    && apt-get install --assume-yes --no-install-recommends gcc \
     && python -m pip install --no-cache-dir psutil \
     && apt-get purge --assume-yes gcc \
     && apt-get clean \
