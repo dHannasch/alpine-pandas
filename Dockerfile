@@ -1,4 +1,4 @@
-FROM dahanna/python-alpine-package:pandas-alpine
+# FROM dahanna/python-alpine-package:pandas-alpine
 # Since this image is intended for continuous integration, and for saving
 # multiple Docker images on a GitLab registry, we want to
 # keep the size down, hence Alpine.
@@ -7,34 +7,34 @@ FROM dahanna/python-alpine-package:pandas-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
-RUN pip install --no-cache-dir scikit-build
-# pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
-RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build-base abuild binutils cmake cmake-extras extra-cmake-modules ninja libressl-dev gfortran g++ openblas-dev lapack-dev libuv-dev \
-    && pip install --no-cache-dir pyuv \
-    && apk --update add --no-cache --virtual cmake-dependencies tar gzip \
-    && pip download --no-cache-dir cmake \
-    && ls cmake-*.tar.gz \
-    && tar --extract --gunzip --file cmake-*.tar.gz \
-    && rm cmake-*.tar.gz \
-    && ls cmake-* \
+# RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+# RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ opencv-dev
+# RUN pip install --no-cache-dir scikit-build
+#   pip install opencv-python yields ModuleNotFoundError: No module named 'skbuild'
+# RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build-base abuild binutils cmake cmake-extras extra-cmake-modules ninja libressl-dev gfortran g++ openblas-dev lapack-dev libuv-dev \
+#    && pip install --no-cache-dir pyuv \
+#    && apk --update add --no-cache --virtual cmake-dependencies tar gzip \
+#    && pip download --no-cache-dir cmake \
+#    && ls cmake-*.tar.gz \
+#    && tar --extract --gunzip --file cmake-*.tar.gz \
+#    && rm cmake-*.tar.gz \
+#    && ls cmake-* \
     # && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
-    && cd cmake-* \
+#    && cd cmake-* \
     # && cmake -D OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so \
     # && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake \
-    && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake -DOPENSSL_INCLUDE_DIR=/usr/include/openssl/ -DOPENSSL_SSL_LIBRARY=/usr/lib/libssl.so -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so -DCMAKE_USE_OPENSSL=OFF \
-    && pip install . \
-    && cd .. \
-    && echo "about to pip install cmake" \
-    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir cmake \
-    && echo "done pip install cmake" \
-    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
-    && apk del --no-cache opencv-python-build-dependencies \
-    && apk --update add --no-cache openblas lapack libstdc++ \
+#    && OPENSSL_ROOT_DIR=/usr/include/openssl/ OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so cmake -DOPENSSL_INCLUDE_DIR=/usr/include/openssl/ -DOPENSSL_SSL_LIBRARY=/usr/lib/libssl.so -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so -DCMAKE_USE_OPENSSL=OFF \
+#    && pip install . \
+#    && cd .. \
+#    && echo "about to pip install cmake" \
+#    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir cmake \
+#    && echo "done pip install cmake" \
+#    && OPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.so CMAKE_USE_OPENSSL=OFF USE_OPENSSL=OFF pip install --no-cache-dir opencv-python-headless \
+#    && apk del --no-cache opencv-python-build-dependencies \
+#    && apk --update add --no-cache openblas lapack libstdc++ \
     # apk add libstdc++ fixes ImportError: Error loading shared library libstdc++.so.6: No such file or directory
     # apk add openblas fixes ImportError: Error loading shared library libopenblas.so.3: No such file or directory
-    && python -c "import cv2"
+#    && python -c "import cv2"
 
 
 # hack to get this working:
@@ -53,4 +53,8 @@ RUN apk --update add --no-cache --virtual opencv-python-build-dependencies build
     # Adding --no-cache-dir to pip install reduced image size from 226.67MB to 208MB.
     # apk del subversion gfortran reduced image size from 208MB to 98.89MB.
 
+
+FROM jjanzic/docker-python3-opencv
+
+RUN pip install --no-cache-dir tox
 
