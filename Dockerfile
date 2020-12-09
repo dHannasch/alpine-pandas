@@ -11,14 +11,15 @@ FROM dahanna/python-alpine-package:tox-alpine
 # but once we identify the best way of doing Samba we'll reduce this down.
 
 RUN apk add --no-cache py-cryptography \
-    && pip install --no-cache-dir wheel \
     && pip install --no-cache-dir pyspnego decorator \
-    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
+    && pip install --no-cache-dir wheel \
+    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev \
     && pip install --no-cache-dir gssapi \
     && pip install --no-cache-dir smbprotocol[kerberos] \
     && apk del --no-cache .build-deps \
     && python -c "import smbprotocol" \
-    && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session"
+    && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session" \
+    && apk add --no-cache krb5
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
