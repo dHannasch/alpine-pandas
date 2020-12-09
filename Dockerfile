@@ -10,9 +10,7 @@ FROM dahanna/python-alpine-package:tox-alpine
 # Right now this is an omnibus image that includes everything,
 # but once we identify the best way of doing Samba we'll reduce this down.
 
-RUN apk add --no-cache cifs-utils util-linux samba-client \
-    && python -m pip install pysmb \
-    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
     && pip install smbprotocol[kerberos] \
     && apk del --no-cache .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
     && python -c "import smbprotocol"
