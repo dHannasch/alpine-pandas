@@ -12,8 +12,9 @@ FROM dahanna/python-alpine-package:tox-alpine
 
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
     && pip install smbprotocol[kerberos] \
-    && apk del --no-cache .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
-    && python -c "import smbprotocol"
+    && apk del --no-cache .build-deps \
+    && python -c "import smbprotocol" \
+    && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session"
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
