@@ -10,9 +10,11 @@ FROM dahanna/python-alpine-package:tox-alpine
 # Right now this is an omnibus image that includes everything,
 # but once we identify the best way of doing Samba we'll reduce this down.
 
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
-    && pip install smbprotocol[kerberos] \
-    && apk del --no-cache .build-deps \
+RUN apk add --no-cache py-cryptography \
+    && pip install --no-cache-dir wheel \
+    # && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
+    && pip install --no-cache-dir smbprotocol[kerberos] \
+    # && apk del --no-cache .build-deps \
     && python -c "import smbprotocol" \
     && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session"
 
