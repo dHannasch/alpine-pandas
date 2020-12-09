@@ -13,7 +13,7 @@ FROM dahanna/python-alpine-package:tox-alpine
 RUN apk add --no-cache py-cryptography \
     && pip install --no-cache-dir pyspnego decorator \
     && pip install --no-cache-dir wheel \
-    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev \
+    && apk add --no-cache --virtual .build-deps krb5-dev \
     && pip install --no-cache-dir gssapi \
     && pip install --no-cache-dir smbprotocol[kerberos] \
     && apk del --no-cache .build-deps \
