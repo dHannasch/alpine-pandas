@@ -12,9 +12,9 @@ FROM dahanna/python-alpine-package:tox-alpine
 
 RUN apk add --no-cache py-cryptography \
     && pip install --no-cache-dir wheel \
-    # && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
+    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev krb5-dev openssl-dev \
     && pip install --no-cache-dir smbprotocol[kerberos] \
-    # && apk del --no-cache .build-deps \
+    && apk del --no-cache .build-deps \
     && python -c "import smbprotocol" \
     && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session"
 
