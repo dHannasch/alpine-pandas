@@ -17,11 +17,7 @@ RUN apk add --no-cache py-cryptography \
     # need gcc for gssapi
     # gcc -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -fomit-frame-pointer -g -fno-semantic-interposition -fomit-frame-pointer -g -fno-semantic-interposition -fomit-frame-pointer -g -fno-semantic-interposition -DTHREAD_STACK_SIZE=0x100000 -fPIC -I/usr/include/python3.8 -c gssapi/raw/misc.c -o build/temp.linux-x86_64-3.8/gssapi/raw/misc.o -DHAS_GSSAPI_EXT_H
     && pip install --no-cache-dir gssapi \
-    && pip install --no-cache-dir smbprotocol[kerberos] \
-    && apk del --no-cache .build-deps \
-    && python -c "import smbprotocol" \
-    && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session" \
-    && apk add --no-cache krb5
+    && apk del --no-cache .build-deps
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
