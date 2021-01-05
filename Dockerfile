@@ -21,7 +21,8 @@ RUN apk add --no-cache py-cryptography \
     && apk del --no-cache .build-deps \
     && python -c "import smbprotocol" \
     && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session" \
-    && apk add --no-cache krb5
+    && apk add --no-cache krb5 \
+    && pip install --no-cache-dir --upgrade certifi
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
