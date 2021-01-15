@@ -29,7 +29,8 @@ FROM alpine:edge
 # We need openssh-client to git clone via SSH
 # (it's more secure to use a deploy key than a password).
 RUN apk add --no-cache python3-dev py3-pip git openssh-client \
-    && ln -s /usr/bin/python3 /usr/bin/python
+    && ln -s /usr/bin/python3 /usr/bin/python \
+    && python -m pip install --no-cache-dir --upgrade pip certifi
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
