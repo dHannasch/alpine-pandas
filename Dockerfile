@@ -1,4 +1,7 @@
-FROM alpine:edge
+FROM alpine:latest
+# alpine:edge now results in gitlab-runner failing:
+# Executing "step_script" stage of the job script
+# sh: write error: Invalid argument
 
 # Since this image is intended for continuous integration, we want to
 # keep the size down, hence Alpine.
