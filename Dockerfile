@@ -7,6 +7,8 @@ FROM dahanna/python-alpine-package:alpine-python3-dev-git
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN python -m pip install --no-cache-dir tox \
+# ERROR: Cannot uninstall 'distlib'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
+RUN python -m pip install --no-cache-dir --ignore-installed distlib \
+    && python -m pip install --no-cache-dir tox \
     && python -m pip install --no-cache-dir coverage docutils flake8 readme-renderer pygments isort setuptools-scm sphinx sphinx-rtd-theme pytest pytest-cov
 # Adding all the dependencies of the various toxenvs in the cookiecutter adds 30MB but presumably we'll always want them.
