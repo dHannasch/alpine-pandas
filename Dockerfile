@@ -8,6 +8,6 @@ FROM dahanna/python-alpine-package:alpine-python3-dev-git
 # python:3.8-alpine is 24.98MB.
 
 RUN apk add --no-cache openssh-client
-RUN python -m pip install --no-cache-dir git+https://github.com/dHannasch/cookiecutter.git@branch-to-run \ # change
+RUN python -m pip install --no-cache-dir git+https://github.com/dHannasch/cookiecutter.git@branch-to-run \
     && python -m pip install --no-cache-dir git+https://github.com/dHannasch/python-cookiepatcher.git@allow-tab-complete-target-directory-name
 
