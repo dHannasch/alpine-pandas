@@ -24,7 +24,8 @@ RUN apk add --no-cache py-cryptography \
     && python -c "import smbclient; smbclient.ClientConfig; smbclient.register_session" \
     && apk add --no-cache krb5 \
     && pip install --no-cache-dir --upgrade certifi \
-    && pip install --no-cache-dir pyyaml
+    && pip install --no-cache-dir pyyaml \
+    && apk add nmap netcat-openbsd
 
 # An apk del in an extra layer has no benefit.
 # Removing files makes images larger, not smaller.
