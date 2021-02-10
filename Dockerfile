@@ -9,7 +9,11 @@ FROM dahanna/python-alpine-package:tox-alpine
 
 RUN apk add --no-cache bazel --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
 RUN apk add --no-cache clang g++ linux-headers curl unzip psmisc \
-    && apk add --no-cache cython
+    && apk add --no-cache cython py3-numpy
+RUN git clone https://github.com/bedfred/py-spy.git \
+    && cd py-spy \
+    && pip install --editable . --verbose
+    && cd ..
 RUN apk add --no-cache grpc \
     && pip install grpcio
 RUN git clone https://github.com/ray-project/ray.git \
