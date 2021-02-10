@@ -7,7 +7,8 @@ FROM dahanna/python-alpine-package:tox-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN apk add --no-cache bazel g++ curl unzip psmisc \
+RUN apk add --no-cache bazel --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
+RUN apk add --no-cache curl unzip psmisc \
     && apk add --no-cache cython
 RUN git clone https://github.com/ray-project/ray.git \
     && cd ray/python \
