@@ -8,7 +8,7 @@ FROM dahanna/python-alpine-package:tox-alpine
 # python:3.8-alpine is 24.98MB.
 
 RUN apk add --no-cache bazel --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
-RUN apk add --no-cache g++ curl unzip psmisc \
+RUN apk add --no-cache clang linux-headers curl unzip psmisc \
     && apk add --no-cache cython
 RUN apk add --no-cache grpc \
     && pip install grpcio
