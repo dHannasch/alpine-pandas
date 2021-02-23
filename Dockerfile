@@ -68,6 +68,12 @@ FROM pythonpackagesonalpine/basic-python-packages-pre-installed-on-alpine:pip-al
 # python-opencv specifically requires that you not already have opencv installed, but we can use the Alpine package to install dependencies of opencv.
 # apk del also removes all the dependencies, so we need to install them manually.
 # https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/testing/opencv/APKBUILD
+
+# pip install cmake is just a fancy way of installing cmake,
+# with --no-build-isolation we can just apk add cmake:
+# https://cliutils.gitlab.io/modern-cmake/chapters/intro/installing.html
+# https://cmake-python-distributions.readthedocs.io/en/latest/installation.html#install-package-with-pip
+
 RUN apk add --no-cache py3-numpy \
     && pip install --no-cache-dir scikit-build \
     && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps blas-dev cmake eigen-dev ffmpeg-dev freetype-dev glew-dev gstreamer-dev harfbuzz-dev hdf5-dev lapack-dev libdc1394-dev libgphoto2-dev libtbb-dev mesa-dev openexr-dev openjpeg-dev openjpeg-tools qt5-qtbase-dev ninja make g++ openssl-dev \
