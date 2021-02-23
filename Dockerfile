@@ -74,9 +74,22 @@ FROM pythonpackagesonalpine/basic-python-packages-pre-installed-on-alpine:pip-al
 # https://cliutils.gitlab.io/modern-cmake/chapters/intro/installing.html
 # https://cmake-python-distributions.readthedocs.io/en/latest/installation.html#install-package-with-pip
 
-RUN apk add --no-cache py3-numpy \
+RUN apk add --no-cache py3-numpy-dev \
     && pip install --no-cache-dir scikit-build \
-    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps blas-dev cmake eigen-dev ffmpeg-dev freetype-dev glew-dev gstreamer-dev harfbuzz-dev hdf5-dev lapack-dev libdc1394-dev libgphoto2-dev libtbb-dev mesa-dev openexr-dev openjpeg-dev openjpeg-tools qt5-qtbase-dev ninja make g++ openssl-dev \
+    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps blas-dev cmake eigen-dev ffmpeg-dev freetype-dev glew-dev gstreamer-dev harfbuzz-dev hdf5-dev lapack-dev libdc1394-dev libgphoto2-dev libtbb-dev mesa-dev openexr-dev openjpeg-dev openjpeg-tools qt5-qtbase-dev ninja make g++ openssl-dev musl-libintl libpng-dev \
+    # pip install opencv-python says GStreamer: NO despite having gstreamer-dev installed
+    # gstreamer-dev should also install glib-dev yet ocv_check_modules(GSTREAMER_base): can't find library 'glib-2.0'.
+    # ocv_check_modules(GSTREAMER_base): can't find library 'gobject-2.0'.
+    # ocv_check_modules(GSTREAMER_base): can't find library 'gstbase-1.0'.
+    # ocv_check_modules(DC1394_2): can't find library 'dc1394'. despite apk add libdc1394-dev
+    # ocv_check_modules(FFMPEG_libavresample): can't find library 'avresample'.
+    # ocv_check_modules(FFMPEG): can't find library 'swscale'.
+    # ocv_check_modules(FFMPEG): can't find library 'avutil'.
+    # ocv_check_modules(FFMPEG): can't find library 'avformat'.
+    # ocv_check_modules(FFMPEG): can't find library 'avcodec'.
+    # ocv_check_modules(GTHREAD): can't find library 'intl'.
+    # ocv_check_modules(GTHREAD): can't find library 'gthread-2.0'.
+    # Could NOT find PNG (missing: PNG_LIBRARY) (found version "1.6.37")
     # --no-build-isolation should allow using the installed numpy so it doesn't try to install another numpy
     && pip install --no-cache-dir --no-build-isolation opencv-python \
     && apk del --no-cache .build-deps \
