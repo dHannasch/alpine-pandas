@@ -66,10 +66,11 @@
 FROM dahanna/python-alpine-package:pandas-alpine
 
 # python-opencv specifically requires that you not already have opencv installed, but we can use the Alpine package to install dependencies of opencv.
-RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ opencv \
-    && apk del --no-cache opencv \
-    && apk add --no-cache --virtual .build-deps cmake g++ \
+# apk del also removes all the dependencies, so we need to install them manually.
+# https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/testing/opencv/APKBUILD
+RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps blas-dev cmake eigen-dev ffmpeg-dev freetype-dev glew-dev gstreamer-dev harfbuzz-dev hdf5-dev lapack-dev libdc1394-dev libgphoto2-dev libtbb-dev mesa-dev openexr-dev openjpeg-dev openjpeg-tools qt5-qtbase-dev \
     && pip install --no-cache-dir opencv-python \
-    && apk del --no-cache .build-deps
+    && apk del --no-cache .build-deps \
+    && python -c "import cv2"
 
 
