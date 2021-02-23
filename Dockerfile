@@ -71,9 +71,8 @@ FROM pythonpackagesonalpine/basic-python-packages-pre-installed-on-alpine:pip-al
 RUN apk add --no-cache py3-numpy \
     && pip install --no-cache-dir scikit-build \
     && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps blas-dev cmake eigen-dev ffmpeg-dev freetype-dev glew-dev gstreamer-dev harfbuzz-dev hdf5-dev lapack-dev libdc1394-dev libgphoto2-dev libtbb-dev mesa-dev openexr-dev openjpeg-dev openjpeg-tools qt5-qtbase-dev ninja make g++ \
-    # ninja is needed to pip install cmake
     # --no-build-isolation should allow using the installed numpy so it doesn't try to install another numpy
-    && pip install --no-cache-dir --no-build-isolation git+https://github.com/dHannasch/opencv-python.git@remove-cmake-from-pyproject-toml \
+    && pip install --no-cache-dir --no-build-isolation opencv-python \
     && apk del --no-cache .build-deps \
     && apk del --no-cache .cmake-build-deps \
     && python -c "import cv2"
