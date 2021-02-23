@@ -94,6 +94,6 @@ RUN apk add --no-cache py3-numpy-dev \
     # --no-build-isolation should allow using the installed numpy so it doesn't try to install another numpy
     && pip install --no-cache-dir --no-build-isolation opencv-python \
     && apk del --no-cache .build-deps \
-    && python -c "import cv2"
+    && apk add --no-cache openjpeg
 
 
