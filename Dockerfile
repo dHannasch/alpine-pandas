@@ -54,10 +54,22 @@
     # apk del subversion gfortran reduced image size from 208MB to 98.89MB.
 
 
-FROM jjanzic/docker-python3-opencv
+# jjanzic/docker-python3-opencv works!
+# but we'd still like to be able to install on a newer version...
+# FROM jjanzic/docker-python3-opencv
 
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir tox
-RUN pip install --no-cache-dir pandas rasterio scikit-image tqdm
+# RUN pip install --upgrade pip
+# RUN pip install --no-cache-dir tox
+# RUN pip install --no-cache-dir pandas rasterio scikit-image tqdm
+
+
+FROM dahanna/python-alpine-package:pandas-alpine
+
+# python-opencv specifically requires that you not already have opencv installed, but we can use the Alpine package to install dependencies of opencv.
+RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ opencv \
+    && apk del --no-cache opencv \
+    && apk add --no-cache --virtual .build-deps cmake g++ \
+    && pip install --no-cache-dir opencv-python \
+    && apk del --no-cache .build-deps
 
 
