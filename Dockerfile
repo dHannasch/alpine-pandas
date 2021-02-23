@@ -69,7 +69,7 @@ FROM pythonpackagesonalpine/basic-python-packages-pre-installed-on-alpine:pip-al
 # apk del also removes all the dependencies, so we need to install them manually.
 # https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/testing/opencv/APKBUILD
 RUN apk add --no-cache py3-numpy \
-    && apk add --no-cache cmake ninja \
+    && apk add --no-cache --virtual .cmake-build-deps cmake make ninja g++ \
     # ninja is needed to pip install cmake
     && pip install --no-cache-dir cmake \
     && pip install --no-cache-dir scikit-build \
@@ -78,6 +78,7 @@ RUN apk add --no-cache py3-numpy \
     # --no-build-isolation should allow using the installed numpy so it doesn't try to install another numpy
     && pip install --no-cache-dir --no-build-isolation opencv-python \
     && apk del --no-cache .build-deps \
+    && apk del --no-cache .cmake-build-deps \
     && python -c "import cv2"
 
 
