@@ -63,7 +63,7 @@
 # RUN pip install --no-cache-dir pandas rasterio scikit-image tqdm
 
 
-FROM dahanna/python-alpine-package:pandas-alpine
+FROM pythonpackagesonalpine/basic-python-packages-pre-installed-on-alpine:pip-alpine
 
 # python-opencv specifically requires that you not already have opencv installed, but we can use the Alpine package to install dependencies of opencv.
 # apk del also removes all the dependencies, so we need to install them manually.
