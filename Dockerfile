@@ -7,12 +7,12 @@ FROM pythonpackagesonalpine/python-visualization-alpine:matplotlib-alpine
 # be applicable to all packages including small packages.
 # python:3.8-alpine is 24.98MB.
 
-RUN apk add --no-cache tesseract-ocr py3-numpy imagemagick \
-    && pip install --upgrade pip setuptools wheel \
-    && apk add --no-cache --virtual .build-deps g++ zlib-dev make python3-dev py3-numpy-dev jpeg-dev musl-dev lapack-dev libstdc++ \
-    && pip install matplotlib \
+RUN apk add --no-cache py3-scipy \
+    && apk add --no-cache tesseract-ocr imagemagick \
+    && apk add --no-cache --virtual .build-deps g++ make python3-dev py3-numpy-dev lapack-dev blas-dev zlib-dev jpeg-dev musl-dev \
     && pip install scikit-image \
     && python -c "import skimage" \
-    && apk del .build-deps \
+    && apk del --no-cache .build-deps \
+    && apk add --no-cache py3-numpy \
     && python -c "import skimage"
 
