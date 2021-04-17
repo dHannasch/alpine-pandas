@@ -5,5 +5,6 @@ RUN ls /usr/bin/bazel \
     && ls /usr/bin/bazel-real \
     && bazel-real --version \
     && echo "bazel-real --version succeeded!" \
-    && bazel --version
+    # https://github.com/bazelbuild/bazel/blob/master/scripts/packages/bazel.sh
+    && (bazel --version || echo "bazel --version failed.")
 
