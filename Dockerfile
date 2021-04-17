@@ -1,7 +1,8 @@
 FROM dahanna/python-ray:grpcio-alpine
 
-RUN bazel --help \
-    && git clone https://github.com/ray-project/ray.git
+RUN bazel --version \
+    && git clone https://github.com/dHannasch/ray.git --branch if-bazel-installed-only-configure \
+    && ray/ci/travis/install-bazel.sh
     # && ray/ci/travis/install-bazel.sh
     # yields
     # The Bazel installer must have write access to /root/bin! Consider using the --user flag to install Bazel under /root/bin instead.
@@ -11,4 +12,5 @@ RUN bazel --help \
     # yields
     # The Bazel installer must have write access to /usr/local/bin!
     # Consider using the --user flag to install Bazel under /root/bin instead.
+    # try just altering install-bazel.sh to check for bazel already found
 
