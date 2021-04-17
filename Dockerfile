@@ -3,7 +3,7 @@ FROM dahanna/python-ray:grpcio-alpine
 RUN bazel-real --version \
     && (bazel --version || echo "bazel --version failed.") \
     && git clone https://github.com/dHannasch/ray.git --branch if-bazel-installed-only-configure \
-    && ray/ci/travis/install-bazel.sh
+    && ray/ci/travis/install-bazel.sh --system
     # && ray/ci/travis/install-bazel.sh
     # yields
     # The Bazel installer must have write access to /root/bin! Consider using the --user flag to install Bazel under /root/bin instead.
