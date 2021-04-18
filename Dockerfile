@@ -1,4 +1,4 @@
-FROM dahanna/python-ray:ray-dashboard-alpine
+FROM dahanna/python-ray:ray-deps-alpine
 
 RUN cd ray/python \
     && pip install --no-build-isolation --editable . --verbose
