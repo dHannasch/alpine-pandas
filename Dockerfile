@@ -1,4 +1,4 @@
-FROM dahanna/python-ray:install-bazel-sh-alpine
+FROM dahanna/python-ray:npm-alpine
 
 RUN cd ray/dashboard/client \
     && npm install \
