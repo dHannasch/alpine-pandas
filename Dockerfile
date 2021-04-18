@@ -1,7 +1,7 @@
 FROM dahanna/python-ray:install-bazel-sh-alpine
 
-RUN pushd ray/dashboard/client \
+RUN cd ray/dashboard/client \
     && npm install \
     && npm run build \
-    && popd
+    && cd ../../..
 
